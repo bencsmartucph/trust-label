@@ -1,7 +1,8 @@
 """Trust labels for shared apps: evidence a non-author can inspect, checked by code.
 
     python trust/trust.py check                       re-run every app on its saved evidence, write label.json
-    python trust/trust.py serve [--port 8765] [--lan] the same, plus the label page at http://127.0.0.1:8765
+    python trust/trust.py serve [--port 8765] [--lan] the same, plus the label page at http://127.0.0.1:8765;
+                                                      --lan lets phones on the same wifi follow along and vote
     python trust/trust.py sign APP "Name" "Role" [--on YYYY-MM-DD]
                                                       record who checked this exact version of the code
 
@@ -18,6 +19,7 @@ import io
 import json
 import platform
 import re
+import socket
 import sys
 import threading
 import types
@@ -416,29 +418,53 @@ def blind_diff(shelf: Shelf) -> dict:
 # ---------- serving ----------
 
 SHELF = Shelf()
+# The room: phones on the same network follow the live label and vote in the blind test.
+ROOM = {"lan": None, "votes": {"A": 0, "B": 0}}
+ROOM_LOCK = threading.Lock()
+
+
+def lan_address(port: int) -> str | None:
+    try:
+        with socket.socket(socket.AF_INET, socket.SOCK_DGRAM) as s:
+            s.connect(("10.255.255.255", 1))  # picks the outgoing interface; sends nothing
+            return f"http://{s.getsockname()[0]}:{port}"
+    except OSError:
+        return None
 
 
 class Handler(BaseHTTPRequestHandler):
     def log_message(self, *args):
         pass
 
-    def send(self, code: int, body: bytes, kind: str):
+    def send(self, code: int, body: bytes, kind: str, etag: str | None = None):
+        if etag and self.headers.get("If-None-Match") == etag:
+            self.send_response(304)  # a room full of phones polling: send the label only when it changed
+            self.send_header("ETag", etag)
+            self.end_headers()
+            return
         self.send_response(code)
         self.send_header("Content-Type", kind)
-        self.send_header("Cache-Control", "no-store")
+        self.send_header("Cache-Control", "no-cache" if etag else "no-store")
+        if etag:
+            self.send_header("ETag", etag)
         self.send_header("Content-Length", str(len(body)))
         self.end_headers()
         self.wfile.write(body)
 
-    def json(self, data, code: int = 200):
-        self.send(code, json.dumps(data, ensure_ascii=False).encode("utf-8"), "application/json; charset=utf-8")
+    def json(self, data, code: int = 200, etag: bool = False):
+        body = json.dumps(data, ensure_ascii=False).encode("utf-8")
+        tag = f'"{hashlib.sha256(body).hexdigest()[:16]}"' if etag else None
+        self.send(code, body, "application/json; charset=utf-8", tag)
 
     def do_GET(self):
         url = urlparse(self.path)
         if url.path in ("/", "/index.html", "/label.html"):
             self.send(200, PAGE.read_bytes(), "text/html; charset=utf-8")
         elif url.path == "/api/labels":
-            self.json(SHELF.labels())
+            self.json(SHELF.labels(), etag=True)
+        elif url.path == "/api/room":
+            with ROOM_LOCK:
+                self.json(ROOM)
         elif url.path == "/api/blind":
             self.json(blind_diff(SHELF))
         elif url.path == "/api/sample":
@@ -455,6 +481,16 @@ class Handler(BaseHTTPRequestHandler):
             elif url.path == "/api/run":
                 body = self.rfile.read(int(self.headers.get("Content-Length", 0))).decode("utf-8-sig")
                 self.json(run_on(SHELF, skill_id, body))
+            elif url.path == "/api/vote":
+                pick = parse_qs(url.query).get("v", [""])[0]
+                with ROOM_LOCK:
+                    if pick in ROOM["votes"]:
+                        ROOM["votes"][pick] += 1
+                    self.json(ROOM)
+            elif url.path == "/api/vote/reset":
+                with ROOM_LOCK:
+                    ROOM["votes"] = {"A": 0, "B": 0}
+                    self.json(ROOM)
             else:
                 self.send(404, b"Not found", "text/plain")
         except Exception as exc:
@@ -492,7 +528,17 @@ def main(argv: list[str]) -> int:
         port = int(argv[argv.index("--port") + 1]) if "--port" in argv else 8765
         host = "0.0.0.0" if "--lan" in argv else "127.0.0.1"
         print(f"Trust labels on http://127.0.0.1:{port}  (Ctrl+C to stop)")
-        ThreadingHTTPServer((host, port), Handler).serve_forever()
+        if "--lan" in argv:
+            ROOM["lan"] = lan_address(port)
+            print(f"Phones on the same wifi: {ROOM['lan']}")
+        # On Windows, address reuse lets a second copy share the port silently; fail loudly instead.
+        ThreadingHTTPServer.allow_reuse_address = sys.platform != "win32"
+        try:
+            server = ThreadingHTTPServer((host, port), Handler)
+        except OSError:
+            print(f"Port {port} is busy: the checker is probably already running. Close it or use --port {port + 1}.")
+            return 2
+        server.serve_forever()
     return 0 if all(l["status"] == "verified" for l in labels if not l.get("blind")) else 1
 
 

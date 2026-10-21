@@ -69,8 +69,14 @@ On screen the stamp reads `TRUST STAMP · MATCHES THE OLD WAY` (amber: `NOT VERI
 
 `Two versions of the same app. You wrote neither.` / `Which one would you run on your own plate? Use only the labels.` Version A is the broken one (it doesn't leave out failed wells). Reveal: `Version B is the one that matches the old way.` · `Both versions say they leave out failed wells. Only one does.` · `Nobody had to read this code. The label caught it.`
 
-## New, optional (being added now, all additive)
+## New since 18:48 (additive, live at 19:00, also frozen)
 
-- Under an amber status: `Since Anders checked it: the failed-well cut-off went from 35 to 40.`
-- The receipt draws the plate: 96 wells, with left-out wells crossed.
-- A `Track record` line: how many times it has been checked, and when it last differed.
+- A second line inside the amber status band, under the sentence: `Since Anders checked it: the failed-well cut-off went from 35 to 40.` In the blind test, version A shows `Since Anders checked it: 3 lines of code removed.` Green shows no such line.
+- The receipt draws the plate: a 96-well grid (A–H by 1–12), wells coloured by gene (GAPDH grey, IL6 blue, TNF violet, HMOX1 teal), and left-out wells as an open amber ring with a slash. Plate 2, green: B12 is crossed. Amber: nothing is crossed.
+- New last row in CHECKED BY CODE: `Track record ........ 4 checks · 3 matched`, a strip of small green and amber bars (one per check), then `Logged since 21 Oct, 18:54. Last differed 21 Oct, 18:54: the failed-well cut-off went from 35 to 40.` (or `It has matched every time.`). The numbers are real and grow with every check, rehearsals included.
+- After "Run the check again" or a status change, the evidence rows tick in one by one, about 170 ms apart.
+
+## The room (19:10, with `--lan`)
+
+- Header button `On your phone` opens a full-screen QR code: `Same wifi as this laptop` / `Open the label on your phone` / the address.
+- Blind test tally box `THE ROOM`: before you pick, `17 people have picked so far. Pick to see the room's answer.`; after you pick, two bars `Version A` and `Version B` with counts, the right one in green.

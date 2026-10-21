@@ -181,9 +181,31 @@ table.sxs { width: 100%; border-collapse: collapse; font-size: 16px; }
 .diff .ctx { color: var(--grey); display: block; }
 
 .note { color: var(--grey); font-size: 15px; }
+.join { border: 1.5px solid var(--ink); background: var(--card); border-radius: 999px; padding: 7px 12px; font-weight: 700; font-size: 14px; cursor: pointer; }
+.overlay { position: fixed; inset: 0; background: rgba(245, 247, 244, .97); display: grid; place-items: center; z-index: 10; padding: 16px; }
+.overlay .box { text-align: center; }
+.overlay h2 { font: 700 clamp(28px, 4vw, 44px)/1.1 var(--serif); margin: 8px 0 18px; }
+.overlay .qr { display: inline-block; padding: 16px; background: #fff; border: 2px solid var(--ink); }
+.overlay .qr img, .overlay .qr canvas { display: block; width: min(60vmin, 360px) !important; height: auto !important; }
+.overlay .url { font: 600 clamp(20px, 3vw, 30px)/1.2 var(--mono); margin: 18px 0 6px; }
+.room { margin-top: 22px; padding: 16px 20px; border: 1px solid var(--ink); background: var(--card); }
+.room .bars { display: grid; gap: 8px; margin-top: 10px; }
+.room .bar { display: grid; grid-template-columns: 90px 1fr 48px; gap: 10px; align-items: center; font-weight: 700; }
+.room .bar span { height: 18px; background: var(--hair); position: relative; }
+.room .bar span i { position: absolute; inset: 0 auto 0 0; background: var(--ink); transition: width .5s ease; }
+.room .bar.good span i { background: var(--green); }
+.room .bar b { font: 600 18px var(--mono); text-align: right; }
 .offline { max-width: 620px; }
 .offline code { font: 500 15px var(--mono); background: var(--card); border: 1px solid var(--hair); padding: 2px 6px; }
 
+@media print {
+  body { background: #fff; font-size: 12pt; }
+  .top, .back, .actions, .tabs, .choose { display: none !important; }
+  main { padding: 0; max-width: none; }
+  .layout { grid-template-columns: 1fr; gap: 18pt; }
+  .label, .panel { break-inside: avoid; border-color: #000; }
+  .status, .sxs tr td, .stamp, .well { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+}
 @media (max-width: 900px) {
   .layout, .pair { grid-template-columns: 1fr; }
 }
@@ -208,6 +230,7 @@ table.sxs { width: 100%; border-collapse: collapse; font-size: 16px; }
   <nav>
     <a href="#/" data-nav="shelf">Shelf</a>
     <a href="#/blind" data-nav="blind">Blind test</a>
+    <button class="join" data-action="join" hidden>On your phone</button>
   </nav>
 </header>
 <main id="app"><p class="note">Reading the shelf…</p></main>
@@ -228,8 +251,9 @@ const mainApps = () => state.labels.filter(l => !l.blind);
 
 async function load() {
   try {
-    const res = await fetch("/api/labels", { cache: "no-store" });
+    const res = await fetch("/api/labels", { cache: "no-cache" });
     take(await res.text());
+    loadRoom();
   } catch (e) {
     if (!state.offline) { state.offline = true; render(); }
   }
@@ -321,8 +345,8 @@ function trackRecord(t) {
       <div class="row"><span class="k">Track record</span><span class="lead"></span>
         <span class="v">${t.checks} check${t.checks === 1 ? "" : "s"} · ${t.matched} matched</span></div>
       <div class="strip" aria-hidden="true">${t.recent.map(m => `<i class="${m ? "" : "warn"}"></i>`).join("")}</div>
-      <p class="fine">Since ${esc(dayShort(t.since))} at ${esc(time(t.since))}. ${last
-        ? `Last differed ${esc(dayShort(last.at))} at ${esc(time(last.at))}.${last.since ? " " + esc(last.since) : ""}`
+      <p class="fine">Logged since ${esc(dayShort(t.since))}, ${esc(time(t.since))}. ${last
+        ? `Last differed ${esc(dayShort(last.at))}, ${esc(time(last.at))}${last.since ? ": " + esc(last.since.replace(/^Since [^:]+: /, "")) : "."}`
         : "It has matched every time."}</p>`;
 }
 
@@ -506,7 +530,56 @@ function blindView() {
     <h1 class="page">Two versions of the same app.<br>You wrote neither.</h1>
     <p class="lede">Which one would you run on your own plate? Use only the labels.</p>
     <div class="pair">${cards}</div>
+    ${roomTally(versions)}
     ${state.pick ? reveal(versions) : ""}`;
+}
+
+/* ---------- the room ---------- */
+const presenter = ["localhost", "127.0.0.1", "[::1]"].includes(location.hostname);
+
+async function loadRoom() {
+  try {
+    const room = await (await fetch("/api/room", { cache: "no-store" })).json();
+    const before = JSON.stringify(state.room);
+    state.room = room;
+    const join = document.querySelector("[data-action=join]");
+    if (join) join.hidden = !(presenter && room.lan);
+    if (before !== JSON.stringify(room) && route().view === "blind") render();
+  } catch (e) { /* the label poll reports being offline */ }
+}
+
+function roomTally(versions) {
+  const v = (state.room && state.room.votes) || { A: 0, B: 0 };
+  const total = v.A + v.B;
+  if (!total && !(state.room && state.room.lan)) return "";
+  const good = versions.find(ok);
+  const reveal = Boolean(state.pick);
+  const bar = k => `<div class="bar ${reveal && good && good.blind === k ? "good" : ""}"><span class="k">Version ${k}</span>
+    <span><i style="width:${total ? (100 * v[k] / total).toFixed(0) : 0}%"></i></span><b>${v[k]}</b></div>`;
+  return `<div class="room"><div class="kicker">The room</div>
+    ${reveal ? `<div class="bars">${bar("A")}${bar("B")}</div>`
+      : `<p class="note" style="margin:6px 0 0">${total} ${total === 1 ? "person has" : "people have"} picked so far. Pick to see the room's answer.</p>`}
+    ${presenter && total ? `<p style="margin:12px 0 0"><button class="btn" data-action="clear-votes">Clear the room's votes</button></p>` : ""}
+  </div>`;
+}
+
+function joinOverlay() {
+  const url = state.room && state.room.lan;
+  if (!url) return;
+  const box = document.createElement("div");
+  box.className = "overlay";
+  box.dataset.action = "close-join";
+  box.innerHTML = `<div class="box"><div class="kicker">Same wifi as this laptop</div>
+    <h2>Open the label on your phone</h2><div class="qr" id="qr"></div>
+    <p class="url">${esc(url)}</p><p class="note">Click anywhere to close</p></div>`;
+  document.body.appendChild(box);
+  const draw = () => { try { new QRCode(document.getElementById("qr"), { text: url, width: 360, height: 360, colorDark: "#141c18", colorLight: "#ffffff" }); } catch (e) { document.getElementById("qr").remove(); } };
+  if (window.QRCode) return draw();
+  const s = document.createElement("script");
+  s.src = "https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js";
+  s.onload = draw;
+  s.onerror = () => document.getElementById("qr").remove();
+  document.head.appendChild(s);
 }
 
 function reveal(versions) {
@@ -564,8 +637,13 @@ document.addEventListener("click", async ev => {
     } catch (e) { state.checking = false; render(); }
   }
   if (act === "sample") { const text = await (await fetch("/api/sample")).text(); runFile(el.dataset.app, text); }
+  if (act === "join") joinOverlay();
+  if (act === "close-join") el.remove();
+  if (act === "clear-votes") { state.room = await (await fetch("/api/vote/reset", { method: "POST" })).json(); render(); }
   if (act === "pick") {
-    state.pick = el.dataset.v; render();
+    state.pick = el.dataset.v;
+    if (!state.voted) { state.voted = true; try { state.room = await (await fetch(`/api/vote?v=${state.pick}`, { method: "POST" })).json(); } catch (e) {} }
+    render();
     state.diff = await (await fetch("/api/blind")).json(); render();
   }
   if (act === "again") { state.pick = null; state.diff = null; render(); window.scrollTo(0, 0); }

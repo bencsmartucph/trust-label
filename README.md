@@ -33,7 +33,7 @@ Every result the app produces carries a **stamp** (version, fingerprint, when it
 
 - `trust.py` is the checker and the local server. It re-runs an app whenever its code, settings or evidence change, and writes `label.json` next to the app.
 - `label.html` is the shelf, the label, the side-by-side view, "use it on my data" and the blind test.
-- `skills/qpcr-ddct/` is the worked example: `skill.py` (the app), `skill.json` (who, what, settings, the sign-off) and `evidence/` (three past plates plus a known-answer plate).
+- `skills/qpcr-ddct/` is the worked example: `skill.py` (the app), `skill.json` (who, what, settings, the sign-off) and `evidence/` (three past plates plus a known-answer plate). `signed.py` and `signed.json` hold the exact code and settings the checker signed, so an amber label can say what changed since. `history.jsonl` logs every check for the track record (git-ignored).
 - `skills/blind-a`, `skills/blind-b` are two versions of the same app for the blind test. One of them skips the failed-well filter.
 - `demo-data/make_demo_data.py` builds the demo evidence.
 

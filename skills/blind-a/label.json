@@ -74,7 +74,7 @@
  },
  "runtime": "Python 3.12",
  "reports": [],
- "last_run": "2026-10-21T18:54:23",
+ "last_run": "2026-10-21T19:00:47",
  "last_matched": null,
  "evidence": [
   {
@@ -2715,11 +2715,11 @@
   }
  ],
  "track_record": {
-  "checks": 1,
+  "checks": 5,
   "matched": 0,
   "since": "2026-10-21T18:54:23",
   "last_differed": {
-   "at": "2026-10-21T18:54:23",
+   "at": "2026-10-21T19:00:47",
    "matched": false,
    "status": "differs",
    "fingerprint": "4ab9a3ade104",
@@ -2727,6 +2727,10 @@
    "since": "Since Anders checked it: 3 lines of code removed."
   },
   "recent": [
+   false,
+   false,
+   false,
+   false,
    false
   ]
  }

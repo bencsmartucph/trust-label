@@ -74,8 +74,8 @@
  },
  "runtime": "Python 3.12",
  "reports": [],
- "last_run": "2026-10-21T18:54:35",
- "last_matched": "2026-10-21T18:54:35",
+ "last_run": "2026-10-21T19:00:47",
+ "last_matched": "2026-10-21T19:00:47",
  "evidence": [
   {
    "title": "Plate 1",
@@ -2705,21 +2705,28 @@
   }
  ],
  "track_record": {
-  "checks": 4,
-  "matched": 3,
+  "checks": 11,
+  "matched": 8,
   "since": "2026-10-21T18:54:15",
   "last_differed": {
-   "at": "2026-10-21T18:54:34",
+   "at": "2026-10-21T18:57:00",
    "matched": false,
    "status": "differs",
-   "fingerprint": "4bb5d2a656f2",
-   "sentence": "Differs on Plate 2: 6 of 18 results changed (biggest: IL6 in T2 is 219.96, the old way says 177.16).",
-   "since": "Since Anders checked it: the failed-well cut-off went from 35 to 40."
+   "fingerprint": "4efe8d5bef38",
+   "sentence": "Differs on Plate 1: 18 rows dropped.",
+   "since": "Since Anders checked it: the reference gene went from GAPDH to ACTB."
   },
   "recent": [
    true,
    true,
    false,
+   true,
+   false,
+   false,
+   true,
+   true,
+   true,
+   true,
    true
   ]
  }

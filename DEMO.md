@@ -1,14 +1,25 @@
 # Demo: two minutes
 
-**Before you go on:** run `python trust\trust.py serve`, open http://127.0.0.1:8765 on the projector, and open `trust\skills\qpcr-ddct\skill.json` in an editor in a second window, scrolled to `"failed_well_ct": 35`. In the blind test, click "Reset the test" if it was used in rehearsal.
+## What makes it live
+
+Nothing on screen is a recording. The checker runs on the laptop while you talk, and every tick is computed in front of the room:
+
+1. **You break it live.** Change one number in `skill.json` and save. Within 2 seconds the label turns amber, says what differs, and says why ("Since Anders checked it: the failed-well cut-off went from 35 to 40.").
+2. **The room breaks it.** Hand the keyboard to anyone: "change any setting you like." Whatever they do, the label explains it. For example, changing the reference gene to ACTB gives "Since Anders checked it: the reference gene went from GAPDH to ACTB. Differs on Plate 1: 18 rows dropped."
+3. **The room watches on their phones.** Start with `--lan` and click **On your phone** to show a QR code. Everyone who opens it sees the same live label, so when you change the number, every phone in the room turns amber at the same moment.
+4. **The room takes the blind test.** Everyone picks A or B on their phone. The projector shows "N people have picked so far" and reveals the split only after the volunteer picks on the laptop.
+
+**Setup for the room (do it in rehearsal, not on stage):** stop any running checker, then start `python trust\trust.py serve --lan`. If Windows asks about the firewall, allow **Private networks**. Then open the printed address on your own phone over the venue wifi. If the phone can't reach it (some venues block devices from seeing each other), drop `--lan` and use one volunteer at the laptop. Everything else works the same.
+
+**Before you go on:** run `python trust\trust.py serve`, open http://127.0.0.1:8765 on the projector, and open `trust\skills\qpcr-ddct\skill.json` in an editor in a second window, scrolled to `"failed_well_ct": 35`. In the blind test, click "Reset the test" if it was used in rehearsal. The track record keeps every rehearsal check, which is honest. To start it clean, stop the server, delete `trust\skills\qpcr-ddct\history.jsonl`, and start it again.
 
 | Time | On screen | Say |
 |---|---|---|
 | 0:00 | Shelf | "We asked the most advanced AI user here what would make her trust a colleague's pipeline. She said she didn't know: maybe an expert checked it. So we built the thing that says which expert checked it, against what, and when." |
 | 0:15 | Shelf card | "Sofie shared her qPCR pipeline. The shelf shows three things: who made it, *matches the old way on 3 of 3 past plates*, and a best-before date." |
-| 0:25 | Open the label, Plate 2 tab | "Every tick was checked by code just now. This is Plate 2 from September next to what the lab's Excel template gave at the time: identical, 18 of 18. And a receipt of what it actually read: 72 wells, one left out, and which one." |
+| 0:25 | Open the label, Plate 2 tab | "Every tick was checked by code just now. This is Plate 2 from September next to what the lab's Excel template gave at the time: identical, 18 of 18. And a receipt of what it actually read: 72 wells, and here's the one it left out, crossed on the plate." |
 | 0:45 | Editor: change `35` to `40`, save | "Now a colleague nudges one setting, the cut-off for failed wells." |
-| 0:50 | Label turns amber | "Nobody had to notice. *Differs on Plate 2: 6 of 18 results changed.* The receipt says it now leaves out nothing." Change `40` back to `35` and save: it goes green again. |
+| 0:50 | Label turns amber | "Nobody had to notice. *Differs on Plate 2: 6 of 18 results changed.* And it says why: *since Anders checked it, the failed-well cut-off went from 35 to 40.* The crossed-out well is back in." Change `40` back to `35` and save: it goes green, and the track record keeps the amber bar. |
 | 1:05 | Blind test | Hand the clicker to someone from another table: "You've never seen this code. Two versions. Which would you run on your own plate?" |
 | 1:20 | They pick; reveal | "The whole difference is two lines: one version stopped leaving out failed wells. Nobody read the code. The label caught it." |
 | 1:35 | Use it on my data, then "Use a sample plate" | "Your plate, run by the good version. Every result comes back stamped: version, who checked it, when it last matched, and what it read." |
