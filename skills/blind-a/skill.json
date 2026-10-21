@@ -1,0 +1,67 @@
+{
+  "id": "blind-a",
+  "name": "qPCR fold change",
+  "subtitle": "ΔΔCt method, relative to GAPDH",
+  "version": "1.2",
+  "made_by": {
+    "name": "Sofie Lund",
+    "role": "Cell biology"
+  },
+  "what_it_does": [
+    "Leaves out failed wells: no signal, or a Ct of 35 or above.",
+    "Averages the three repeat wells for each sample and gene.",
+    "Compares each gene with GAPDH in the same sample.",
+    "Compares each sample with the average control sample.",
+    "Reports fold change: 2.00 means twice as much as in control."
+  ],
+  "how_it_was_made": [
+    {
+      "step": "Writing the script",
+      "who": "AI drafted, a person checked",
+      "check": "Sofie read each step against the Excel template"
+    },
+    {
+      "step": "Checking the results",
+      "who": "A person",
+      "check": "Anders compared it with three past plates"
+    },
+    {
+      "step": "Running it",
+      "who": "No AI needed",
+      "check": "plain code, the same every time"
+    }
+  ],
+  "old_way": "the lab's Excel template (ddCt_v3.xlsx)",
+  "job_noun": "plates",
+  "input_columns": [
+    "well",
+    "sample",
+    "group",
+    "gene",
+    "ct"
+  ],
+  "input_noun": "wells",
+  "compare": {
+    "key": [
+      "gene",
+      "sample"
+    ],
+    "show": "fold_change",
+    "row_label": "{gene} in {sample}"
+  },
+  "settings": {
+    "reference_gene": "GAPDH",
+    "control_group": "control",
+    "failed_well_ct": 35
+  },
+  "evidence": "../qpcr-ddct/evidence",
+  "best_before_days": 30,
+  "checked": {
+    "by": "Dr Anders Kjær",
+    "role": "qPCR core facility",
+    "on": "2026-10-14",
+    "skill_fingerprint": "0ccb9e6eef98"
+  },
+  "reports": [],
+  "blind": "A"
+}

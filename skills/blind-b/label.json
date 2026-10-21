@@ -1,0 +1,681 @@
+{
+ "id": "blind-b",
+ "name": "qPCR fold change",
+ "subtitle": "ΔΔCt method, relative to GAPDH",
+ "version": "1.2",
+ "made_by": {
+  "name": "Sofie Lund",
+  "role": "Cell biology"
+ },
+ "what_it_does": [
+  "Leaves out failed wells: no signal, or a Ct of 35 or above.",
+  "Averages the three repeat wells for each sample and gene.",
+  "Compares each gene with GAPDH in the same sample.",
+  "Compares each sample with the average control sample.",
+  "Reports fold change: 2.00 means twice as much as in control."
+ ],
+ "how_it_was_made": [
+  {
+   "step": "Writing the script",
+   "who": "AI drafted, a person checked",
+   "check": "Sofie read each step against the Excel template"
+  },
+  {
+   "step": "Checking the results",
+   "who": "A person",
+   "check": "Anders compared it with three past plates"
+  },
+  {
+   "step": "Running it",
+   "who": "No AI needed",
+   "check": "plain code, the same every time"
+  }
+ ],
+ "old_way": "the lab's Excel template (ddCt_v3.xlsx)",
+ "settings": {
+  "reference_gene": "GAPDH",
+  "control_group": "control",
+  "failed_well_ct": 35
+ },
+ "blind": "B",
+ "job_noun": "plates",
+ "input_columns": [
+  "well",
+  "sample",
+  "group",
+  "gene",
+  "ct"
+ ],
+ "best_before_days": 30,
+ "status": "verified",
+ "headline": "Matches the old way",
+ "sentence": "Identical on 3 of 3 past plates, and it reproduces the known answer exactly.",
+ "summary": "Matches the old way on 3 of 3 past plates",
+ "past_jobs": 3,
+ "past_matched": 3,
+ "known_answer": "identical",
+ "fingerprint": "0ccb9e6eef98",
+ "signed": true,
+ "checked": {
+  "by": "Dr Anders Kjær",
+  "role": "qPCR core facility",
+  "on": "2026-10-14",
+  "skill_fingerprint": "0ccb9e6eef98"
+ },
+ "checker_is_author": false,
+ "best_before": "2026-11-13",
+ "days_left": 23,
+ "plain_code": {
+  "ok": true,
+  "imports": [],
+  "sentence": "Plain Python 3.12. Uses nothing from Python itself. No AI, no internet, no add-ons."
+ },
+ "runtime": "Python 3.12",
+ "reports": [],
+ "last_run": "2026-10-21T18:34:27",
+ "last_matched": "2026-10-21T18:34:27",
+ "evidence": [
+  {
+   "title": "Plate 1",
+   "date": "2026-08-14",
+   "kind": "old_way",
+   "source": "Results from the lab's Excel template, saved at the time",
+   "id": "plate-1",
+   "against": "the old way",
+   "input_fingerprint": "3226633cd45d",
+   "expected_fingerprint": "43ca21866c4d",
+   "rows": [
+    {
+     "label": "IL6 in C1",
+     "state": "same",
+     "differs_in": [],
+     "old": "0.78",
+     "new": "0.78"
+    },
+    {
+     "label": "IL6 in C2",
+     "state": "same",
+     "differs_in": [],
+     "old": "1.17",
+     "new": "1.17"
+    },
+    {
+     "label": "IL6 in C3",
+     "state": "same",
+     "differs_in": [],
+     "old": "1.09",
+     "new": "1.09"
+    },
+    {
+     "label": "IL6 in T1",
+     "state": "same",
+     "differs_in": [],
+     "old": "57.37",
+     "new": "57.37"
+    },
+    {
+     "label": "IL6 in T2",
+     "state": "same",
+     "differs_in": [],
+     "old": "117.97",
+     "new": "117.97"
+    },
+    {
+     "label": "IL6 in T3",
+     "state": "same",
+     "differs_in": [],
+     "old": "77.65",
+     "new": "77.65"
+    },
+    {
+     "label": "TNF in C1",
+     "state": "same",
+     "differs_in": [],
+     "old": "0.92",
+     "new": "0.92"
+    },
+    {
+     "label": "TNF in C2",
+     "state": "same",
+     "differs_in": [],
+     "old": "1.08",
+     "new": "1.08"
+    },
+    {
+     "label": "TNF in C3",
+     "state": "same",
+     "differs_in": [],
+     "old": "1.01",
+     "new": "1.01"
+    },
+    {
+     "label": "TNF in T1",
+     "state": "same",
+     "differs_in": [],
+     "old": "6.99",
+     "new": "6.99"
+    },
+    {
+     "label": "TNF in T2",
+     "state": "same",
+     "differs_in": [],
+     "old": "8.33",
+     "new": "8.33"
+    },
+    {
+     "label": "TNF in T3",
+     "state": "same",
+     "differs_in": [],
+     "old": "6.37",
+     "new": "6.37"
+    },
+    {
+     "label": "HMOX1 in C1",
+     "state": "same",
+     "differs_in": [],
+     "old": "1.06",
+     "new": "1.06"
+    },
+    {
+     "label": "HMOX1 in C2",
+     "state": "same",
+     "differs_in": [],
+     "old": "1.06",
+     "new": "1.06"
+    },
+    {
+     "label": "HMOX1 in C3",
+     "state": "same",
+     "differs_in": [],
+     "old": "0.89",
+     "new": "0.89"
+    },
+    {
+     "label": "HMOX1 in T1",
+     "state": "same",
+     "differs_in": [],
+     "old": "5.40",
+     "new": "5.40"
+    },
+    {
+     "label": "HMOX1 in T2",
+     "state": "same",
+     "differs_in": [],
+     "old": "4.05",
+     "new": "4.05"
+    },
+    {
+     "label": "HMOX1 in T3",
+     "state": "same",
+     "differs_in": [],
+     "old": "4.35",
+     "new": "4.35"
+    }
+   ],
+   "sentence": "Identical: all 18 results match the old way.",
+   "result": "identical",
+   "receipt": {
+    "read": 72,
+    "used": 72,
+    "left_out": 0,
+    "notes": [],
+    "results": 18,
+    "input_fingerprint": "3226633cd45d",
+    "sentence": "Read all 72 wells in the file. Used 72, left out 0."
+   }
+  },
+  {
+   "title": "Plate 2",
+   "date": "2026-09-03",
+   "kind": "old_way",
+   "source": "Results from the lab's Excel template, saved at the time",
+   "id": "plate-2",
+   "against": "the old way",
+   "input_fingerprint": "e1101e7d77eb",
+   "expected_fingerprint": "381ec44cd2d8",
+   "rows": [
+    {
+     "label": "IL6 in C1",
+     "state": "same",
+     "differs_in": [],
+     "old": "0.77",
+     "new": "0.77"
+    },
+    {
+     "label": "IL6 in C2",
+     "state": "same",
+     "differs_in": [],
+     "old": "1.14",
+     "new": "1.14"
+    },
+    {
+     "label": "IL6 in C3",
+     "state": "same",
+     "differs_in": [],
+     "old": "1.13",
+     "new": "1.13"
+    },
+    {
+     "label": "IL6 in T1",
+     "state": "same",
+     "differs_in": [],
+     "old": "124.98",
+     "new": "124.98"
+    },
+    {
+     "label": "IL6 in T2",
+     "state": "same",
+     "differs_in": [],
+     "old": "177.16",
+     "new": "177.16"
+    },
+    {
+     "label": "IL6 in T3",
+     "state": "same",
+     "differs_in": [],
+     "old": "106.81",
+     "new": "106.81"
+    },
+    {
+     "label": "TNF in C1",
+     "state": "same",
+     "differs_in": [],
+     "old": "0.65",
+     "new": "0.65"
+    },
+    {
+     "label": "TNF in C2",
+     "state": "same",
+     "differs_in": [],
+     "old": "1.46",
+     "new": "1.46"
+    },
+    {
+     "label": "TNF in C3",
+     "state": "same",
+     "differs_in": [],
+     "old": "1.06",
+     "new": "1.06"
+    },
+    {
+     "label": "TNF in T1",
+     "state": "same",
+     "differs_in": [],
+     "old": "3.80",
+     "new": "3.80"
+    },
+    {
+     "label": "TNF in T2",
+     "state": "same",
+     "differs_in": [],
+     "old": "5.83",
+     "new": "5.83"
+    },
+    {
+     "label": "TNF in T3",
+     "state": "same",
+     "differs_in": [],
+     "old": "3.18",
+     "new": "3.18"
+    },
+    {
+     "label": "HMOX1 in C1",
+     "state": "same",
+     "differs_in": [],
+     "old": "0.69",
+     "new": "0.69"
+    },
+    {
+     "label": "HMOX1 in C2",
+     "state": "same",
+     "differs_in": [],
+     "old": "1.02",
+     "new": "1.02"
+    },
+    {
+     "label": "HMOX1 in C3",
+     "state": "same",
+     "differs_in": [],
+     "old": "1.42",
+     "new": "1.42"
+    },
+    {
+     "label": "HMOX1 in T1",
+     "state": "same",
+     "differs_in": [],
+     "old": "2.78",
+     "new": "2.78"
+    },
+    {
+     "label": "HMOX1 in T2",
+     "state": "same",
+     "differs_in": [],
+     "old": "4.25",
+     "new": "4.25"
+    },
+    {
+     "label": "HMOX1 in T3",
+     "state": "same",
+     "differs_in": [],
+     "old": "2.68",
+     "new": "2.68"
+    }
+   ],
+   "sentence": "Identical: all 18 results match the old way.",
+   "result": "identical",
+   "receipt": {
+    "read": 72,
+    "used": 71,
+    "left_out": 1,
+    "notes": [
+     "Left out well B12 (IL6 in C2): Ct 35.84, at or above 35."
+    ],
+    "results": 18,
+    "input_fingerprint": "e1101e7d77eb",
+    "sentence": "Read all 72 wells in the file. Used 71, left out 1."
+   }
+  },
+  {
+   "title": "Plate 3",
+   "date": "2026-09-22",
+   "kind": "old_way",
+   "source": "Results from the lab's Excel template, saved at the time",
+   "id": "plate-3",
+   "against": "the old way",
+   "input_fingerprint": "d430ca7fe7c3",
+   "expected_fingerprint": "b4c1bdf3a925",
+   "rows": [
+    {
+     "label": "IL6 in C1",
+     "state": "same",
+     "differs_in": [],
+     "old": "0.68",
+     "new": "0.68"
+    },
+    {
+     "label": "IL6 in C2",
+     "state": "same",
+     "differs_in": [],
+     "old": "1.43",
+     "new": "1.43"
+    },
+    {
+     "label": "IL6 in C3",
+     "state": "same",
+     "differs_in": [],
+     "old": "1.03",
+     "new": "1.03"
+    },
+    {
+     "label": "IL6 in T1",
+     "state": "same",
+     "differs_in": [],
+     "old": "59.85",
+     "new": "59.85"
+    },
+    {
+     "label": "IL6 in T2",
+     "state": "same",
+     "differs_in": [],
+     "old": "109.64",
+     "new": "109.64"
+    },
+    {
+     "label": "IL6 in T3",
+     "state": "same",
+     "differs_in": [],
+     "old": "81.57",
+     "new": "81.57"
+    },
+    {
+     "label": "TNF in C1",
+     "state": "same",
+     "differs_in": [],
+     "old": "1.07",
+     "new": "1.07"
+    },
+    {
+     "label": "TNF in C2",
+     "state": "same",
+     "differs_in": [],
+     "old": "1.00",
+     "new": "1.00"
+    },
+    {
+     "label": "TNF in C3",
+     "state": "same",
+     "differs_in": [],
+     "old": "0.94",
+     "new": "0.94"
+    },
+    {
+     "label": "TNF in T1",
+     "state": "same",
+     "differs_in": [],
+     "old": "3.79",
+     "new": "3.79"
+    },
+    {
+     "label": "TNF in T2",
+     "state": "same",
+     "differs_in": [],
+     "old": "4.89",
+     "new": "4.89"
+    },
+    {
+     "label": "TNF in T3",
+     "state": "same",
+     "differs_in": [],
+     "old": "5.09",
+     "new": "5.09"
+    },
+    {
+     "label": "HMOX1 in C1",
+     "state": "same",
+     "differs_in": [],
+     "old": "0.73",
+     "new": "0.73"
+    },
+    {
+     "label": "HMOX1 in C2",
+     "state": "same",
+     "differs_in": [],
+     "old": "1.18",
+     "new": "1.18"
+    },
+    {
+     "label": "HMOX1 in C3",
+     "state": "same",
+     "differs_in": [],
+     "old": "1.16",
+     "new": "1.16"
+    },
+    {
+     "label": "HMOX1 in T1",
+     "state": "same",
+     "differs_in": [],
+     "old": "3.27",
+     "new": "3.27"
+    },
+    {
+     "label": "HMOX1 in T2",
+     "state": "same",
+     "differs_in": [],
+     "old": "3.46",
+     "new": "3.46"
+    },
+    {
+     "label": "HMOX1 in T3",
+     "state": "same",
+     "differs_in": [],
+     "old": "2.59",
+     "new": "2.59"
+    }
+   ],
+   "sentence": "Identical: all 18 results match the old way.",
+   "result": "identical",
+   "receipt": {
+    "read": 72,
+    "used": 71,
+    "left_out": 1,
+    "notes": [
+     "Left out well D11 (TNF in T1): no signal."
+    ],
+    "results": 18,
+    "input_fingerprint": "d430ca7fe7c3",
+    "sentence": "Read all 72 wells in the file. Used 71, left out 1."
+   }
+  },
+  {
+   "title": "Known-answer plate",
+   "date": "2026-10-14",
+   "kind": "known_answer",
+   "source": "Built so the right answers are exactly 4, 2 and ½",
+   "id": "known-answer",
+   "against": "the known answer",
+   "input_fingerprint": "9b7e60a90303",
+   "expected_fingerprint": "9fd2f63e90c8",
+   "rows": [
+    {
+     "label": "IL6 in C1",
+     "state": "same",
+     "differs_in": [],
+     "old": "1.00",
+     "new": "1.00"
+    },
+    {
+     "label": "IL6 in C2",
+     "state": "same",
+     "differs_in": [],
+     "old": "1.00",
+     "new": "1.00"
+    },
+    {
+     "label": "IL6 in C3",
+     "state": "same",
+     "differs_in": [],
+     "old": "1.00",
+     "new": "1.00"
+    },
+    {
+     "label": "IL6 in T1",
+     "state": "same",
+     "differs_in": [],
+     "old": "4.00",
+     "new": "4.00"
+    },
+    {
+     "label": "IL6 in T2",
+     "state": "same",
+     "differs_in": [],
+     "old": "4.00",
+     "new": "4.00"
+    },
+    {
+     "label": "IL6 in T3",
+     "state": "same",
+     "differs_in": [],
+     "old": "4.00",
+     "new": "4.00"
+    },
+    {
+     "label": "TNF in C1",
+     "state": "same",
+     "differs_in": [],
+     "old": "1.00",
+     "new": "1.00"
+    },
+    {
+     "label": "TNF in C2",
+     "state": "same",
+     "differs_in": [],
+     "old": "1.00",
+     "new": "1.00"
+    },
+    {
+     "label": "TNF in C3",
+     "state": "same",
+     "differs_in": [],
+     "old": "1.00",
+     "new": "1.00"
+    },
+    {
+     "label": "TNF in T1",
+     "state": "same",
+     "differs_in": [],
+     "old": "2.00",
+     "new": "2.00"
+    },
+    {
+     "label": "TNF in T2",
+     "state": "same",
+     "differs_in": [],
+     "old": "2.00",
+     "new": "2.00"
+    },
+    {
+     "label": "TNF in T3",
+     "state": "same",
+     "differs_in": [],
+     "old": "2.00",
+     "new": "2.00"
+    },
+    {
+     "label": "HMOX1 in C1",
+     "state": "same",
+     "differs_in": [],
+     "old": "1.00",
+     "new": "1.00"
+    },
+    {
+     "label": "HMOX1 in C2",
+     "state": "same",
+     "differs_in": [],
+     "old": "1.00",
+     "new": "1.00"
+    },
+    {
+     "label": "HMOX1 in C3",
+     "state": "same",
+     "differs_in": [],
+     "old": "1.00",
+     "new": "1.00"
+    },
+    {
+     "label": "HMOX1 in T1",
+     "state": "same",
+     "differs_in": [],
+     "old": "0.50",
+     "new": "0.50"
+    },
+    {
+     "label": "HMOX1 in T2",
+     "state": "same",
+     "differs_in": [],
+     "old": "0.50",
+     "new": "0.50"
+    },
+    {
+     "label": "HMOX1 in T3",
+     "state": "same",
+     "differs_in": [],
+     "old": "0.50",
+     "new": "0.50"
+    }
+   ],
+   "sentence": "Identical: all 18 results match the known answer.",
+   "result": "identical",
+   "receipt": {
+    "read": 72,
+    "used": 71,
+    "left_out": 1,
+    "notes": [
+     "Left out well C6 (IL6 in T1): Ct 37.20, at or above 35."
+    ],
+    "results": 18,
+    "input_fingerprint": "9b7e60a90303",
+    "sentence": "Read all 72 wells in the file. Used 71, left out 1."
+   }
+  }
+ ]
+}

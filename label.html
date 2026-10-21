@@ -1,0 +1,539 @@
+<!doctype html>
+<html lang="en">
+<head>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 100 100%27><text y=%27.9em%27 font-size=%2790%27>📄</text></svg>">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Trust Label</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Libre+Caslon+Text:wght@400;700&family=Source+Sans+3:wght@400;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  color-scheme: light;
+  --paper: #f5f7f4; --card: #fffffd; --ink: #141c18; --grey: #5d6660; --hair: #d9ded8;
+  --green: #2f7a45; --green-tint: #e6f0e8; --amber: #8a5a00; --amber-tint: #faf0d9;
+  --red: #b23a2e; --blue: #2a6fc4;
+  --serif: "Libre Caslon Text", Georgia, "Times New Roman", serif;
+  --sans: "Source Sans 3", "Segoe UI", system-ui, -apple-system, sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, Consolas, "Courier New", monospace;
+}
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body { margin: 0; background: var(--paper); color: var(--ink); font: 400 17px/1.45 var(--sans); }
+button { font: inherit; color: inherit; }
+a { color: inherit; }
+
+.top { display: flex; align-items: center; justify-content: space-between; gap: 16px;
+  max-width: 1200px; margin: 0 auto; padding: 18px 24px 14px; border-bottom: 1px solid var(--ink); }
+.mark { display: flex; align-items: center; gap: 10px; text-decoration: none;
+  font: 600 12px/1 var(--mono); letter-spacing: .16em; text-transform: uppercase; }
+.mark i { width: 18px; height: 18px; border: 2px solid var(--ink); display: grid; place-items: center; font-style: normal; font-size: 11px; }
+nav { display: flex; gap: 4px; }
+nav a { text-decoration: none; font: 600 15px/1 var(--sans); padding: 8px 12px; border-radius: 999px; color: var(--grey); }
+nav a.on { background: var(--ink); color: var(--paper); }
+
+main { max-width: 1200px; margin: 0 auto; padding: 28px 24px 64px; }
+.kicker { font: 600 11px/1.2 var(--mono); letter-spacing: .16em; text-transform: uppercase; color: var(--grey); }
+h1.page { font: 700 clamp(30px, 4.4vw, 46px)/1.08 var(--serif); margin: 8px 0 10px; letter-spacing: -.01em; }
+.lede { max-width: 640px; color: var(--grey); font-size: 19px; margin: 0 0 28px; }
+.back { display: inline-block; margin-bottom: 18px; text-decoration: none; color: var(--grey); font-weight: 600; }
+.back:hover { color: var(--ink); }
+
+/* ---------- shelf ---------- */
+.shelf { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; }
+.jar { display: block; text-decoration: none; background: var(--card); border: 1px solid var(--ink);
+  border-left: 6px solid var(--green); padding: 18px 20px 16px; transition: transform .15s ease; }
+.jar:hover { transform: translateY(-2px); }
+.jar.warn { border-left-color: var(--amber); }
+.jar.plain { border-left-color: var(--ink); }
+.jar h2 { font: 700 26px/1.1 var(--serif); margin: 8px 0 4px; }
+.jar .sub { color: var(--grey); margin: 0 0 14px; }
+.jar .three { display: grid; gap: 6px; margin: 0; padding: 12px 0 0; border-top: 1px solid var(--hair); font-size: 16px; }
+.jar .three div { display: flex; gap: 8px; align-items: baseline; }
+.jar .three dt { width: 86px; flex: none; font: 500 11px/1.6 var(--mono); letter-spacing: .1em; text-transform: uppercase; color: var(--grey); }
+.jar .three dd { margin: 0; font-weight: 600; }
+.jar .open { display: block; margin-top: 14px; font-weight: 700; }
+.pill { display: inline-flex; align-items: center; gap: 7px; }
+.dot { width: 10px; height: 10px; border-radius: 50%; background: var(--green); flex: none; display: inline-block; }
+.warn .dot, .dot.warn { background: var(--amber); }
+.ok-t { color: var(--green); } .warn-t { color: var(--amber); }
+
+/* ---------- label ---------- */
+.layout { display: grid; grid-template-columns: minmax(0, 470px) minmax(0, 1fr); gap: 32px; align-items: start; }
+.label { background: var(--card); border: 2px solid var(--ink); padding: 18px 20px 16px; }
+.label .name { font: 700 clamp(28px, 3.4vw, 36px)/1.05 var(--serif); margin: 8px 0 6px; letter-spacing: -.01em; }
+.label .sub { color: var(--grey); margin: 0; }
+.rule { background: var(--ink); }
+.rule.thick { height: 10px; margin-top: 14px; }
+.rule.mid { height: 4px; }
+.rule.thin { height: 1px; }
+.status { display: grid; grid-template-columns: 16px 1fr; gap: 12px; margin: 14px 0; padding: 12px 14px;
+  background: var(--green-tint); border-left: 5px solid var(--green); }
+.status .dot { width: 14px; height: 14px; margin-top: 6px; }
+.status.warn { background: var(--amber-tint); border-left-color: var(--amber); }
+.status b { display: block; font: 700 21px/1.2 var(--serif); }
+.status p { margin: 4px 0 0; font-size: 16px; }
+.flash { animation: flash 1.6s ease-out 2; }
+@keyframes flash { 0% { box-shadow: 0 0 0 0 rgba(138, 90, 0, .55); } 100% { box-shadow: 0 0 0 18px rgba(138, 90, 0, 0); } }
+.flash.ok-flash { animation-name: flash-ok; }
+@keyframes flash-ok { 0% { box-shadow: 0 0 0 0 rgba(47, 122, 69, .5); } 100% { box-shadow: 0 0 0 18px rgba(47, 122, 69, 0); } }
+
+.label section { padding-bottom: 10px; }
+.label h3 { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; margin: 0; padding: 10px 0 7px;
+  border-bottom: 1px solid var(--ink); font: 600 11px/1.2 var(--mono); letter-spacing: .14em; text-transform: uppercase; }
+.label h3 span { letter-spacing: .06em; color: var(--grey); text-transform: none; font-weight: 500; }
+.row { display: flex; align-items: baseline; gap: 8px; width: 100%; padding: 8px 0; margin: 0; text-align: left;
+  background: none; border: 0; border-bottom: 1px solid var(--hair); font-size: 16px; line-height: 1.35; }
+button.row { cursor: pointer; }
+button.row:hover .k, button.row.sel .k { text-decoration: underline; text-underline-offset: 3px; }
+.row .k { font-weight: 700; flex: none; }
+.row .k em { font-style: normal; font-weight: 400; color: var(--grey); }
+.row .lead { flex: 1; min-width: 14px; border-bottom: 1.5px dotted #a3aaa4; transform: translateY(-5px); }
+.row .v { font-weight: 700; text-align: right; font-variant-numeric: tabular-nums; }
+.row .v.ok { color: var(--green); } .row .v.warn { color: var(--amber); }
+.fine { margin: 2px 0 0; font-size: 14px; color: var(--grey); }
+.fp { font: 500 13px/1.4 var(--mono); color: var(--grey); letter-spacing: .02em; }
+.halflife { height: 6px; background: var(--hair); margin: 6px 0 2px; }
+.halflife i { display: block; height: 100%; background: var(--ink); }
+.label ol { margin: 8px 0 4px; padding-left: 22px; font-size: 16px; }
+.label ol li { margin: 3px 0; }
+.made { display: grid; grid-template-columns: auto 1fr; gap: 6px 10px; margin-top: 10px; font-size: 15px; align-items: baseline; }
+.chip { font: 600 11px/1 var(--mono); letter-spacing: .04em; padding: 4px 7px; border: 1.5px solid currentColor; white-space: nowrap; }
+.chip.yours { color: var(--red); } .chip.drafts { color: var(--blue); } .chip.noai { color: var(--grey); }
+.made b { display: block; }
+.label footer { padding-top: 12px; }
+.legend { font-size: 14px; color: var(--grey); margin: 0 0 12px; }
+.actions { display: flex; flex-wrap: wrap; gap: 10px; }
+.btn { appearance: none; border: 2px solid var(--ink); background: var(--card); padding: 10px 16px; font-weight: 700; font-size: 16px;
+  cursor: pointer; text-decoration: none; display: inline-flex; align-items: center; gap: 8px; }
+.btn.primary { background: var(--ink); color: var(--paper); }
+.btn:disabled { opacity: .6; cursor: progress; }
+
+/* ---------- evidence ---------- */
+.panel { background: var(--card); border: 1px solid var(--hair); padding: 22px 24px 24px; }
+.panel h2 { font: 700 26px/1.15 var(--serif); margin: 8px 0 16px; }
+.tabs { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 18px; }
+.tab { border: 1.5px solid var(--hair); background: none; border-radius: 999px; padding: 7px 13px; font-weight: 600; font-size: 15px; cursor: pointer; display: inline-flex; gap: 8px; align-items: center; }
+.tab.on { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+.verdict { font: 700 20px/1.3 var(--serif); margin: 4px 0 6px; }
+.source { color: var(--grey); margin: 0 0 14px; font-size: 15px; }
+.receipt { border: 1px dashed #a3aaa4; padding: 10px 14px; margin: 0 0 16px; font-size: 15px; }
+.receipt .kicker { margin-bottom: 4px; }
+.receipt ul { margin: 6px 0 0; padding-left: 18px; font: 400 13.5px/1.5 var(--mono); }
+table.sxs { width: 100%; border-collapse: collapse; font-size: 16px; }
+.sxs th { text-align: left; font: 600 11px/1.2 var(--mono); letter-spacing: .12em; text-transform: uppercase; color: var(--grey);
+  padding: 8px 10px; border-bottom: 2px solid var(--ink); }
+.sxs th.num, .sxs td.num { text-align: right; }
+.sxs td { padding: 6px 10px; border-bottom: 1px solid var(--hair); }
+.sxs td.num { font: 500 15px/1.3 var(--mono); }
+.sxs td.m { width: 28px; text-align: center; color: var(--grey); font-family: var(--mono); }
+.sxs tr.changed td, .sxs tr.missing td, .sxs tr.extra td { background: var(--amber-tint); }
+.sxs tr.changed td.new, .sxs tr.changed td.m { color: var(--amber); font-weight: 700; }
+.files { margin-top: 14px; }
+
+/* ---------- run ---------- */
+.drop { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; padding: 22px; border: 2px dashed #a3aaa4; background: var(--card); margin-bottom: 26px; }
+.drop.over { border-color: var(--ink); }
+.drop p { margin: 0; color: var(--grey); flex-basis: 100%; }
+.stamp { border: 3px double var(--green); color: var(--ink); padding: 14px 18px; background: var(--card); max-width: 720px; margin-bottom: 22px; position: relative; }
+.stamp.warn { border-color: var(--amber); }
+.stamp .head { display: flex; justify-content: space-between; gap: 10px; flex-wrap: wrap; font: 600 13px/1.2 var(--mono); letter-spacing: .16em; text-transform: uppercase; color: var(--green); margin-bottom: 10px; }
+.stamp.warn .head { color: var(--amber); }
+.stamp dl { display: grid; grid-template-columns: max-content 1fr; gap: 4px 16px; margin: 0; font-size: 15px; }
+.stamp dt { font: 500 12px/1.6 var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--grey); }
+.stamp dd { margin: 0; }
+.matrix { border-collapse: collapse; font-size: 16px; margin-bottom: 18px; }
+.matrix th { font: 600 11px/1.2 var(--mono); letter-spacing: .1em; text-transform: uppercase; color: var(--grey); padding: 8px 12px; border-bottom: 2px solid var(--ink); text-align: right; }
+.matrix th:first-child, .matrix td:first-child { text-align: left; }
+.matrix td { padding: 7px 12px; border-bottom: 1px solid var(--hair); text-align: right; font: 500 15px/1.3 var(--mono); }
+.matrix td:first-child { font: 700 16px/1.3 var(--sans); }
+.scroll { overflow-x: auto; }
+.error { color: var(--red); font-weight: 600; }
+
+/* ---------- blind ---------- */
+.pair { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; align-items: start; }
+.pair .label .name { font-size: 30px; }
+.choose { margin-top: 12px; width: 100%; justify-content: center; }
+.picked .label { outline: 4px solid var(--ink); outline-offset: 4px; }
+.reveal { margin-top: 28px; background: var(--card); border: 2px solid var(--ink); padding: 22px 24px; }
+.reveal h2 { font: 700 26px/1.2 var(--serif); margin: 6px 0 10px; }
+.diff { font: 500 14px/1.6 var(--mono); background: var(--paper); padding: 12px 14px; overflow-x: auto; white-space: pre; margin: 12px 0; }
+.diff .del { color: var(--red); background: #f6e3e0; display: block; }
+.diff .add { color: var(--green); background: var(--green-tint); display: block; }
+.diff .ctx { color: var(--grey); display: block; }
+
+.note { color: var(--grey); font-size: 15px; }
+.offline { max-width: 620px; }
+.offline code { font: 500 15px var(--mono); background: var(--card); border: 1px solid var(--hair); padding: 2px 6px; }
+
+@media (max-width: 900px) {
+  .layout, .pair { grid-template-columns: 1fr; }
+}
+@media (max-width: 520px) {
+  body { font-size: 16px; }
+  .top { padding: 14px 16px 12px; }
+  main { padding: 20px 16px 48px; }
+  .label { padding: 14px 14px 12px; }
+  .panel { padding: 16px; }
+  .row { flex-wrap: wrap; }
+  .row .lead { display: none; }
+  .row .v { margin-left: auto; }
+  .sxs td, .sxs th { padding: 6px 6px; }
+  .stamp dl { grid-template-columns: 1fr; gap: 0 0; }
+  .stamp dd { margin-bottom: 6px; }
+}
+</style>
+</head>
+<body>
+<header class="top">
+  <a class="mark" href="#/"><i>✓</i>Trust labels</a>
+  <nav>
+    <a href="#/" data-nav="shelf">Shelf</a>
+    <a href="#/blind" data-nav="blind">Blind test</a>
+  </nav>
+</header>
+<main id="app"><p class="note">Reading the shelf…</p></main>
+
+<script>
+const state = { labels: [], raw: "", prev: {}, flash: {}, job: {}, run: null, runError: "", pick: null, diff: null, checking: false, offline: false };
+
+const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+const day = iso => { if (!iso) return "—"; const [y, m, d] = iso.slice(0, 10).split("-"); return `${+d} ${MONTHS[+m - 1]} ${y}`; };
+const dayShort = iso => day(iso).replace(/ \d{4}$/, "");
+const time = iso => iso ? iso.slice(11, 16) : "—";
+const ok = l => l.status === "verified";
+const tone = l => ok(l) ? "ok" : "warn";
+const firstName = n => (n || "").replace(/^(Dr|Prof)\.?\s+/, "").split(" ")[0];
+const byId = id => state.labels.find(l => l.id === id);
+const mainApps = () => state.labels.filter(l => !l.blind);
+
+async function load() {
+  try {
+    const res = await fetch("/api/labels", { cache: "no-store" });
+    take(await res.text());
+  } catch (e) {
+    if (!state.offline) { state.offline = true; render(); }
+  }
+}
+
+function take(text) {
+  state.offline = false;
+  if (text === state.raw) return;
+  state.raw = text;
+  state.labels = JSON.parse(text);
+  for (const l of state.labels) {
+    const before = state.prev[l.id];
+    if (before && before !== l.status) { state.flash[l.id] = true; delete state.job[l.id]; }
+    state.prev[l.id] = l.status;
+  }
+  render();
+}
+
+function route() {
+  const [view, id] = location.hash.replace(/^#\/?/, "").split("/");
+  return { view: view || "shelf", id };
+}
+
+function render() {
+  const { view, id } = route();
+  const app = document.getElementById("app");
+  document.querySelectorAll("[data-nav]").forEach(a =>
+    a.classList.toggle("on", a.dataset.nav === (view === "blind" ? "blind" : "shelf")));
+  if (!state.labels.length) { app.innerHTML = state.offline ? offlineView() : `<p class="note">Reading the shelf…</p>`; return; }
+  const l = byId(id) || mainApps()[0];
+  app.innerHTML = view === "app" ? labelView(l) : view === "run" ? runView(l) : view === "blind" ? blindView() : shelfView();
+  for (const fid of Object.keys(state.flash)) {
+    document.querySelectorAll(`[data-status="${fid}"]`).forEach(el => {
+      el.classList.add("flash"); if (ok(byId(fid))) el.classList.add("ok-flash");
+    });
+  }
+  state.flash = {};
+}
+
+/* ---------- shelf ---------- */
+function shelfView() {
+  const jars = mainApps().map(l => `
+    <a class="jar ${tone(l)}" href="#/app/${esc(l.id)}">
+      <div class="kicker">App · version ${esc(l.version)}</div>
+      <h2>${esc(l.name)}</h2>
+      <p class="sub">${esc(l.subtitle)}</p>
+      <dl class="three">
+        <div><dt>Made by</dt><dd>${esc(l.made_by.name)}</dd></div>
+        <div><dt>Evidence</dt><dd class="pill ${tone(l)}" data-status="${esc(l.id)}"><span class="dot"></span>
+          <span class="${tone(l)}-t">${esc(l.summary)}</span></dd></div>
+        <div><dt>Best before</dt><dd>${esc(dayShort(l.best_before))}${l.days_left != null ? ` <span class="note">· ${l.days_left} days left</span>` : ""}</dd></div>
+      </dl>
+      ${ok(l) ? "" : `<p class="fine warn-t"><b>${esc(l.headline)}.</b> ${esc(l.sentence)}</p>`}
+      <span class="open">Open the label →</span>
+    </a>`).join("");
+  return `
+    <div class="kicker">Shared by colleagues</div>
+    <h1 class="page">The shelf</h1>
+    <p class="lede">Each app carries its own evidence: who checked it, against what, on which data, and until when.</p>
+    <div class="shelf">${jars}
+      <a class="jar plain" href="#/blind">
+        <div class="kicker">Try it</div>
+        <h2>Blind test</h2>
+        <p class="sub">Two versions of the same app. One is broken. Can you tell which from the labels alone?</p>
+        <span class="open">Take the test →</span>
+      </a>
+    </div>`;
+}
+
+/* ---------- label ---------- */
+function evidenceRow(l, e, compact) {
+  const good = e.result === "identical";
+  const known = e.kind === "known_answer";
+  const what = known ? "Known answer" : "Old way";
+  const detail = known ? "4, 2 and ½" : `${e.title}, ${dayShort(e.date)}`;
+  const value = good ? (known ? "exact ✓" : "identical ✓") : "differs ≠";
+  const sel = state.job[l.id] === e.id ? " sel" : "";
+  const inner = `<span class="k">${what} <em>${esc(detail)}</em></span><span class="lead"></span><span class="v ${good ? "ok" : "warn"}">${value}</span>`;
+  return compact ? `<div class="row">${inner}</div>`
+    : `<button class="row${sel}" data-action="job" data-app="${esc(l.id)}" data-job="${esc(e.id)}" title="Show side by side">${inner}</button>`;
+}
+
+function labelCard(l, opts = {}) {
+  const c = l.checked || {};
+  const who = firstName(c.by) || "anyone";
+  const left = l.days_left != null ? Math.max(0, Math.min(1, l.days_left / (l.best_before_days || 30))) : 0;
+  const name = opts.alias || l.name;
+  const sub = opts.alias ? l.name + " · " + l.subtitle : `${l.subtitle} · version ${l.version}`;
+  const chip = w => w.startsWith("AI") ? "drafts" : w.startsWith("No AI") ? "noai" : "yours";
+  return `
+  <article class="label" aria-label="Trust label for ${esc(name)}">
+    <div class="kicker">Trust label</div>
+    <h2 class="name">${esc(name)}</h2>
+    <p class="sub">${esc(sub)}</p>
+    <div class="rule thick"></div>
+    <div class="status ${tone(l)}" data-status="${esc(l.id)}">
+      <span class="dot"></span>
+      <div><b>${esc(l.headline)}</b><p>${esc(l.sentence)}</p></div>
+    </div>
+    <div class="rule mid"></div>
+
+    <section>
+      <h3>Checked by code <span>${l.last_run ? "at " + time(l.last_run) : ""}</span></h3>
+      ${l.evidence.map(e => evidenceRow(l, e, opts.compact)).join("")}
+      <div class="row"><span class="k">This version</span><span class="lead"></span>
+        <span class="v ${l.signed ? "ok" : "warn"}">${l.signed ? `the one ${esc(who)} checked ✓` : (c.by ? `not the one ${esc(who)} checked ≠` : "never checked ≠")}</span></div>
+      <p class="fp">code fingerprint ${esc(l.fingerprint)}${c.skill_fingerprint && !l.signed ? ` · ${esc(who)} checked ${esc(c.skill_fingerprint)}` : ""}</p>
+      <div class="row"><span class="k">Runs as</span><span class="lead"></span>
+        <span class="v ${l.plain_code.ok ? "ok" : "warn"}">${l.plain_code.ok ? "plain code ✓" : "reaches outside ≠"}</span></div>
+      <p class="fine">${esc(l.plain_code.sentence)}</p>
+    </section>
+    <div class="rule mid"></div>
+
+    <section>
+      <h3>Signed by people</h3>
+      <div class="row"><span class="k">Made by</span><span class="lead"></span><span class="v">${esc(l.made_by.name)}</span></div>
+      <div class="row"><span class="k">Checked by</span><span class="lead"></span><span class="v">${esc(c.by || "no one yet")}</span></div>
+      ${c.by ? `<p class="fine">${esc(c.role)} · ${l.checker_is_author ? `<span class="warn-t">the author checked their own work</span>` : `<span class="ok-t">not the author ✓</span>`}</p>` : ""}
+      <div class="row"><span class="k">Checked on</span><span class="lead"></span><span class="v">${esc(day(c.on))}</span></div>
+      <div class="row"><span class="k">Best before</span><span class="lead"></span><span class="v">${esc(day(l.best_before))}</span></div>
+      ${l.days_left != null ? `<div class="halflife"><i style="width:${(left * 100).toFixed(0)}%"></i></div>
+      <p class="fine">${l.days_left >= 0 ? `${l.days_left} of ${l.best_before_days} days left, then ${esc(who)} looks again` : "Due for a re-check"}</p>` : ""}
+    </section>
+
+    ${opts.compact ? "" : `
+    <div class="rule mid"></div>
+    <section>
+      <h3>Stated by the author <span>not checked</span></h3>
+      <ol>${(l.what_it_does || []).map(s => `<li>${esc(s)}</li>`).join("")}</ol>
+      <div class="made">${(l.how_it_was_made || []).map(m => `
+        <span class="chip ${chip(m.who)}">${esc(m.who)}</span><span><b>${esc(m.step)}</b><span class="note">${esc(m.check)}</span></span>`).join("")}
+      </div>
+    </section>
+    <div class="rule thin"></div>
+    <section>
+      <div class="row"><span class="k">Problems reported</span><span class="lead"></span><span class="v">${l.reports.length ? l.reports.length : "none"}</span></div>
+      <p class="fine">If two different people report the same problem, the app pauses until ${esc(firstName(l.made_by.name))} fixes it.</p>
+    </section>
+    <div class="rule thick"></div>
+    <footer>
+      <p class="legend">✓ means code checked it on this run. Everything else is what people say.</p>
+      <div class="actions">
+        <button class="btn" data-action="check" ${state.checking ? "disabled" : ""}>${state.checking ? "Checking…" : "Run the check again"}</button>
+        <a class="btn primary" href="#/run/${esc(l.id)}">Use it on my data</a>
+      </div>
+    </footer>`}
+  </article>`;
+}
+
+function evidencePanel(l) {
+  if (!l.evidence.length) return "";
+  const pick = state.job[l.id] || (l.evidence.find(e => e.result !== "identical") || l.evidence[0]).id;
+  const e = l.evidence.find(x => x.id === pick) || l.evidence[0];
+  const good = e.result === "identical";
+  const oldName = e.kind === "known_answer" ? "Known answer" : "The old way";
+  const tabs = l.evidence.map(x => `
+    <button class="tab ${x.id === e.id ? "on" : ""}" data-action="job" data-app="${esc(l.id)}" data-job="${esc(x.id)}">
+      <span class="dot ${x.result === "identical" ? "" : "warn"}"></span>${esc(x.kind === "known_answer" ? "Known answer" : x.title)}</button>`).join("");
+  const r = e.receipt;
+  return `
+  <div class="panel">
+    <div class="kicker">The evidence</div>
+    <h2>${e.kind === "known_answer" ? "The known answer and this app, side by side" : `The old way and this app, side by side`}</h2>
+    <div class="tabs">${tabs}</div>
+    <p class="verdict ${good ? "ok-t" : "warn-t"}">${esc(e.sentence)}</p>
+    <p class="source">${esc(e.title)} · ${esc(day(e.date))}. ${esc(e.source)}${e.kind === "old_way" ? `: ${esc(l.old_way)}` : ""}.</p>
+    ${r ? `<div class="receipt"><div class="kicker">Receipt: what it actually read</div>${esc(r.sentence)}
+      ${r.notes.length ? `<ul>${r.notes.map(n => `<li>${esc(n)}</li>`).join("")}</ul>` : ""}</div>` : ""}
+    ${e.rows.length ? `<div class="scroll"><table class="sxs">
+      <thead><tr><th>Result</th><th class="num">${oldName}</th><th class="num">This app</th><th></th></tr></thead>
+      <tbody>${e.rows.map(x => `<tr class="${x.state}"><td>${esc(x.label)}</td><td class="num">${esc(x.old ?? "—")}</td>
+        <td class="num new">${esc(x.new ?? "—")}</td><td class="m">${x.state === "same" ? "=" : "≠"}</td></tr>`).join("")}</tbody>
+    </table></div>` : ""}
+    <p class="fp files">input file ${esc(e.input_fingerprint)} · ${e.kind === "known_answer" ? "answer" : "old-way"} file ${esc(e.expected_fingerprint)}</p>
+  </div>`;
+}
+
+function labelView(l) {
+  return `<a class="back" href="#/">← Shelf</a>
+    <div class="layout">${labelCard(l)}${evidencePanel(l)}</div>`;
+}
+
+/* ---------- run on your data ---------- */
+function runView(l) {
+  const c = l.checked || {};
+  const run = state.run && state.run.app === l.id ? state.run : null;
+  return `<a class="back" href="#/app/${esc(l.id)}">← The label</a>
+    <div class="kicker">${esc(l.name)} · version ${esc(l.version)}</div>
+    <h1 class="page">Use it on your own data</h1>
+    <p class="lede">Your file needs these columns: ${esc((l.input_columns || []).join(", "))}. It runs on this computer as plain code, and every result comes back stamped.</p>
+    <div class="drop" data-drop>
+      <label class="btn primary">Choose a CSV file<input type="file" accept=".csv,text/csv" data-action="file" hidden></label>
+      <button class="btn" data-action="sample" data-app="${esc(l.id)}">Use a sample plate</button>
+      <p>Or drop a file here.</p>
+    </div>
+    ${state.runError ? `<p class="error">${esc(state.runError)}</p>` : ""}
+    ${run ? runResult(l, run) : ""}`;
+}
+
+function runResult(l, run) {
+  const c = l.checked || {};
+  const good = run.status === "verified";
+  const rs = run.results;
+  const genes = [...new Set(rs.map(r => r.gene))];
+  const samples = [...new Set(rs.map(r => r.sample))];
+  const cell = (g, s) => (rs.find(r => r.gene === g && r.sample === s) || {}).fold_change ?? "—";
+  const url = URL.createObjectURL(new Blob([run.csv], { type: "text/csv" }));
+  return `
+    <div class="stamp ${good ? "" : "warn"}">
+      <div class="head"><span>Trust stamp</span><span>${good ? "Matches the old way" : "Not verified: " + esc(l.headline.toLowerCase())}</span></div>
+      <dl>
+        <dt>App</dt><dd>${esc(l.name)}, version ${esc(l.version)} · <span class="fp">code ${esc(l.fingerprint)}</span></dd>
+        <dt>Last matched</dt><dd>${l.last_matched ? `the old way, ${esc(day(l.last_matched))} at ${esc(time(l.last_matched))}` : "never"}</dd>
+        <dt>Checked by</dt><dd>${esc(c.by || "no one yet")}${c.on ? `, ${esc(day(c.on))} · best before ${esc(day(l.best_before))}` : ""}</dd>
+        <dt>This run</dt><dd>${esc(day(run.run_at))} at ${esc(time(run.run_at))} · <span class="fp">input ${esc(run.receipt.input_fingerprint)}</span></dd>
+        <dt>Receipt</dt><dd>${esc(run.receipt.sentence)}${run.receipt.notes.length ? `<ul class="fp" style="margin:4px 0 0;padding-left:18px">${run.receipt.notes.map(n => `<li>${esc(n)}</li>`).join("")}</ul>` : ""}</dd>
+      </dl>
+    </div>
+    <div class="kicker" style="margin-bottom:8px">Fold change against the average control</div>
+    <div class="scroll"><table class="matrix">
+      <thead><tr><th>Gene</th>${samples.map(s => `<th>${esc(s)}</th>`).join("")}</tr></thead>
+      <tbody>${genes.map(g => `<tr><td>${esc(g)}</td>${samples.map(s => `<td>${esc(cell(g, s))}</td>`).join("")}</tr>`).join("")}</tbody>
+    </table></div>
+    <a class="btn" href="${url}" download="${esc(run.filename)}">Download with the stamp</a>`;
+}
+
+/* ---------- blind test ---------- */
+function blindView() {
+  const versions = ["A", "B"].map(k => state.labels.find(l => l.blind === k)).filter(Boolean);
+  if (versions.length < 2) return `<p class="note">The blind test needs two versions on the shelf.</p>`;
+  const cards = versions.map(l => `
+    <div class="${state.pick === l.blind ? "picked" : ""}">
+      ${labelCard(l, { compact: true, alias: "Version " + l.blind })}
+      <button class="btn choose ${state.pick ? "" : "primary"}" data-action="pick" data-v="${l.blind}" ${state.pick ? "disabled" : ""}>I'd run version ${l.blind}</button>
+    </div>`).join("");
+  return `
+    <div class="kicker">Blind test</div>
+    <h1 class="page">Two versions of the same app.<br>You wrote neither.</h1>
+    <p class="lede">Which one would you run on your own plate? Use only the labels.</p>
+    <div class="pair">${cards}</div>
+    ${state.pick ? reveal(versions) : ""}`;
+}
+
+function reveal(versions) {
+  const good = versions.find(ok);
+  const right = good && state.pick === good.blind;
+  const diff = state.diff ? state.diff.diff.map(line => {
+    const cls = line.startsWith("-") ? "del" : line.startsWith("+") ? "add" : "ctx";
+    return `<span class="${cls}">${esc(line)}</span>`;
+  }).join("") : "Loading…";
+  const bad = versions.find(l => !ok(l));
+  return `<div class="reveal">
+    <div class="kicker">${right ? "You caught it" : "Look again"}</div>
+    <h2>${right ? `Version ${good.blind} is the one that matches the old way.` : `Version ${bad.blind} is the broken one.`}</h2>
+    <p>${esc(bad.sentence)} Both versions say they leave out failed wells. Only one does.</p>
+    <div class="kicker">The whole difference between the two versions</div>
+    <div class="diff">${diff}</div>
+    <p class="note">Nobody had to read this code. The label caught it.</p>
+    <button class="btn" data-action="again">Reset the test</button>
+  </div>`;
+}
+
+function offlineView() {
+  return `<div class="offline"><div class="kicker">Not connected</div>
+    <h1 class="page">The checker isn't running</h1>
+    <p class="lede">The labels are checked by a small Python program on this computer. Start it from the project folder:</p>
+    <p><code>python trust\\trust.py serve</code></p></div>`;
+}
+
+/* ---------- actions ---------- */
+async function post(url, body) {
+  const res = await fetch(url, { method: "POST", body, headers: { "Content-Type": "text/plain; charset=utf-8" } });
+  const data = await res.json();
+  if (!res.ok) throw new Error(data.error || "Something went wrong");
+  return data;
+}
+
+async function runFile(id, text) {
+  state.runError = "";
+  try { state.run = { app: id, ...(await post(`/api/run?app=${encodeURIComponent(id)}`, text)) }; }
+  catch (e) { state.runError = e.message; state.run = null; }
+  render();
+}
+
+document.addEventListener("click", async ev => {
+  const el = ev.target.closest("[data-action]");
+  if (!el) return;
+  const act = el.dataset.action;
+  if (act === "job") { state.job[el.dataset.app] = el.dataset.job; render(); }
+  if (act === "check") {
+    state.checking = true; render();
+    const started = Date.now();
+    try { const res = await fetch("/api/check", { method: "POST" }); const text = await res.text();
+      await new Promise(r => setTimeout(r, Math.max(0, 700 - (Date.now() - started))));
+      state.checking = false; state.raw = ""; take(text);
+    } catch (e) { state.checking = false; render(); }
+  }
+  if (act === "sample") { const text = await (await fetch("/api/sample")).text(); runFile(el.dataset.app, text); }
+  if (act === "pick") {
+    state.pick = el.dataset.v; render();
+    state.diff = await (await fetch("/api/blind")).json(); render();
+  }
+  if (act === "again") { state.pick = null; state.diff = null; render(); window.scrollTo(0, 0); }
+});
+
+document.addEventListener("change", async ev => {
+  if (ev.target.dataset.action !== "file" || !ev.target.files[0]) return;
+  runFile(route().id || mainApps()[0].id, await ev.target.files[0].text());
+});
+document.addEventListener("dragover", ev => { const d = ev.target.closest("[data-drop]"); if (d) { ev.preventDefault(); d.classList.add("over"); } });
+document.addEventListener("dragleave", ev => { const d = ev.target.closest("[data-drop]"); if (d) d.classList.remove("over"); });
+document.addEventListener("drop", async ev => {
+  const d = ev.target.closest("[data-drop]");
+  if (!d || !ev.dataTransfer.files[0]) return;
+  ev.preventDefault();
+  runFile(route().id || mainApps()[0].id, await ev.dataTransfer.files[0].text());
+});
+
+window.addEventListener("hashchange", () => { state.runError = ""; render(); window.scrollTo(0, 0); });
+load();
+setInterval(load, 1500);
+</script>
+</body>
+</html>
