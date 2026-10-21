@@ -6,10 +6,9 @@ Nothing on screen is a recording. The checker runs on the laptop while you talk,
 
 1. **You break it live.** Change one number in `skill.json` and save. Within 2 seconds the label turns amber, says what differs, and says why ("Since Anders checked it: the failed-well cut-off went from 35 to 40.").
 2. **The room breaks it.** Hand the keyboard to anyone: "change any setting you like." Whatever they do, the label explains it. For example, changing the reference gene to ACTB gives "Since Anders checked it: the reference gene went from GAPDH to ACTB. Differs on Plate 1: 18 rows dropped."
-3. **The room watches on their phones.** Start with `--lan` and click **On your phone** to show a QR code. Everyone who opens it sees the same live label, so when you change the number, every phone in the room turns amber at the same moment.
-4. **The room takes the blind test.** Everyone picks A or B on their phone. The projector shows "N people have picked so far" and reveals the split only after the volunteer picks on the laptop.
+3. **A volunteer picks.** Someone who didn't write either version takes the blind test at the laptop, using only the labels.
 
-**Setup for the room (do it in rehearsal, not on stage):** stop any running checker, then start `python trust\trust.py serve --lan`. If Windows asks about the firewall, allow **Private networks**. Then open the printed address on your own phone over the venue wifi. If the phone can't reach it (some venues block devices from seeing each other), drop `--lan` and use one volunteer at the laptop. Everything else works the same.
+**Not in the five-minute slot: phones.** `serve --lan` lets the room follow the label on their phones (a QR code from the **On your phone** button) and vote in the blind test. It costs about 30 seconds and depends on the venue wifi, so keep it for the stand afterwards. Without `--lan` the button and the tally don't appear, and nothing else changes.
 
 **Before you go on:** run `python trust\trust.py serve`, open http://127.0.0.1:8765 on the projector, and open `trust\skills\qpcr-ddct\skill.json` in an editor in a second window, scrolled to `"failed_well_ct": 35`. In the blind test, click "Reset the test" if it was used in rehearsal. The track record keeps every rehearsal check, which is honest. To start it clean, stop the server, delete `trust\skills\qpcr-ddct\history.jsonl`, and start it again.
 
