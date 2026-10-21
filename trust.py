@@ -17,6 +17,7 @@ import hashlib
 import io
 import json
 import platform
+import re
 import sys
 import threading
 import types
@@ -106,7 +107,23 @@ def receipt(skill: dict, rows: list[dict], text: str, notes: list[str], results:
         "read": len(rows), "used": len(rows) - left, "left_out": left, "notes": notes,
         "results": len(results), "input_fingerprint": fingerprint(text),
         "sentence": f"Read all {len(rows)} {noun} in the file. Used {len(rows) - left}, left out {left}.",
+        "plate": plate_map(skill, rows, notes),
     }
+
+
+def plate_map(skill: dict, rows: list[dict], notes: list[str]) -> list[dict]:
+    """Every input row as a well on the plate, marked when a note says it was left out."""
+    spec = skill.get("plate")
+    if not spec:
+        return []
+    ids = {r.get(spec["id"]) for r in rows}
+    out = set()
+    for note in notes:
+        hit = next((t for t in re.findall(r"[\w-]+", note) if t in ids), None)
+        if hit:
+            out.add(hit)
+    return [{"id": r[spec["id"]], "colour": r.get(spec["colour_by"], ""), "label": spec["label"].format(**r),
+             "value": r.get(spec["value"], ""), "out": r[spec["id"]] in out} for r in rows]
 
 
 # ---------- comparing ----------
@@ -192,6 +209,47 @@ def check_evidence(skill: dict) -> list[dict]:
     return sorted(evidence, key=lambda e: (e["kind"] == "known_answer", e["date"]))
 
 
+def changes_since_check(skill: dict) -> str | None:
+    """What is different from the exact version the checker signed, in plain words."""
+    checked = skill.get("checked") or {}
+    if not checked.get("skill_fingerprint") or checked["skill_fingerprint"] == skill["fingerprint"]:
+        return None
+    names = skill.get("setting_names", {})
+    changes = []
+    snapshot = skill["folder"] / "signed.json"
+    signed_env = json.loads(read_text(snapshot)) if snapshot.exists() else {}
+    before = signed_env.get("settings") or {}
+    for k in [k for k in before if k in skill["settings"]] + [k for k in skill["settings"] if k not in before]:
+        if before.get(k) != skill["settings"].get(k):
+            changes.append(f"{names.get(k, k)} went from {before.get(k, 'unset')} to {skill['settings'].get(k)}")
+    signed_code = skill["folder"] / "signed.py"
+    if signed_code.exists():
+        diff = list(difflib.ndiff(read_text(signed_code).splitlines(), skill["code"].splitlines()))
+        removed = sum(line.startswith("- ") for line in diff)
+        added = sum(line.startswith("+ ") for line in diff)
+        if removed or added:
+            parts = [f"{n} line{'s' * (n != 1)} of code {verb}" for n, verb in ((removed, "removed"), (added, "added")) if n]
+            changes.append(" and ".join(parts))
+    if signed_env.get("runtime") and signed_env["runtime"] != RUNTIME:
+        changes.append(f"Python went from {signed_env['runtime']} to {RUNTIME}")
+    who = re.sub(r"^(Dr|Prof)\.?\s+", "", checked.get("by", "")).split(" ")[0] or "the checker"
+    return f"Since {who} checked it: " + ("; ".join(changes) if changes else "something outside the code changed") + "."
+
+
+def record(folder: Path, label: dict) -> dict:
+    """Append this check to the app's history and summarise the track record."""
+    path = folder / "history.jsonl"
+    entry = {"at": label["last_run"], "matched": label["matched_all"], "status": label["status"],
+             "fingerprint": label["fingerprint"], "sentence": label["sentence"], "since": label["since"]}
+    with path.open("a", encoding="utf-8", newline="\n") as f:
+        f.write(json.dumps(entry, ensure_ascii=False) + "\n")
+    history = [json.loads(line) for line in read_text(path).splitlines() if line.strip()]
+    differed = [h for h in history if not h["matched"]]
+    return {"checks": len(history), "matched": len(history) - len(differed), "since": history[0]["at"],
+            "last_differed": differed[-1] if differed else None,
+            "recent": [h["matched"] for h in history[-40:]]}
+
+
 def build_label(skill: dict, previous: dict | None = None) -> dict:
     previous = previous or {}
     evidence = check_evidence(skill)
@@ -234,8 +292,8 @@ def build_label(skill: dict, previous: dict | None = None) -> dict:
         **{k: skill.get(k) for k in ("id", "name", "subtitle", "version", "made_by", "what_it_does",
                                      "how_it_was_made", "old_way", "settings", "blind", "job_noun",
                                      "input_columns", "best_before_days")},
-        "status": status, "headline": headline, "sentence": sentence,
-        "summary": summary, "past_jobs": len(past), "past_matched": matched,
+        "status": status, "headline": headline, "sentence": sentence, "since": changes_since_check(skill),
+        "matched_all": all_match, "summary": summary, "past_jobs": len(past), "past_matched": matched,
         "known_answer": known[0]["result"] if known else None,
         "fingerprint": skill["fingerprint"], "signed": signed, "checked": checked,
         "checker_is_author": bool(checked) and checker == skill["made_by"]["name"],
@@ -286,6 +344,7 @@ class Shelf:
                 if force or not cached or cached[0] != key:
                     previous = cached[1] if cached else read_previous(folder)
                     label = build_label(skill, previous)
+                    label["track_record"] = record(folder, label)
                     (folder / "label.json").write_text(json.dumps(label, indent=1, ensure_ascii=False) + "\n",
                                                        encoding="utf-8")
                     self.cache[skill["id"]] = (key, label)
@@ -410,6 +469,10 @@ def sign(skill_id: str, by: str, role: str, on: str | None):
     skill = load_skill(folder)
     meta["checked"] = {"by": by, "role": role, "on": on or dt.date.today().isoformat(),
                        "skill_fingerprint": skill["fingerprint"]}
+    # keep the exact code and settings that were checked, outside skill.json so an edit there can't touch them
+    (folder / "signed.py").write_text(skill["code"], encoding="utf-8", newline="\n")
+    (folder / "signed.json").write_text(json.dumps({"settings": skill["settings"], "runtime": RUNTIME}, indent=2) + "\n",
+                                        encoding="utf-8", newline="\n")
     (folder / "skill.json").write_text(json.dumps(meta, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
     print(f"Signed {skill_id} {skill['fingerprint']} by {by} on {meta['checked']['on']}")
 

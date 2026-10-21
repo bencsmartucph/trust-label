@@ -62,5 +62,16 @@
     "on": "2026-10-14",
     "skill_fingerprint": "0ccb9e6eef98"
   },
-  "reports": []
+  "reports": [],
+  "setting_names": {
+    "failed_well_ct": "the failed-well cut-off",
+    "reference_gene": "the reference gene",
+    "control_group": "the control group"
+  },
+  "plate": {
+    "id": "well",
+    "colour_by": "gene",
+    "label": "{gene} in {sample}",
+    "value": "ct"
+  }
 }

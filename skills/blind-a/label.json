@@ -50,6 +50,8 @@
  "status": "differs",
  "headline": "Differs from the old way",
  "sentence": "Differs on Plate 2: 6 of 18 results changed (biggest: IL6 in T2 is 219.96, the old way says 177.16).",
+ "since": "Since Anders checked it: 3 lines of code removed.",
+ "matched_all": false,
  "summary": "Matches the old way on 2 of 3 past plates",
  "past_jobs": 3,
  "past_matched": 2,
@@ -72,7 +74,7 @@
  },
  "runtime": "Python 3.12",
  "reports": [],
- "last_run": "2026-10-21T18:38:55",
+ "last_run": "2026-10-21T18:54:23",
  "last_matched": null,
  "evidence": [
   {
@@ -221,7 +223,513 @@
     "notes": [],
     "results": 18,
     "input_fingerprint": "3226633cd45d",
-    "sentence": "Read all 72 wells in the file. Used 72, left out 0."
+    "sentence": "Read all 72 wells in the file. Used 72, left out 0.",
+    "plate": [
+     {
+      "id": "A1",
+      "colour": "GAPDH",
+      "label": "GAPDH in C1",
+      "value": "17.92",
+      "out": false
+     },
+     {
+      "id": "A2",
+      "colour": "GAPDH",
+      "label": "GAPDH in C1",
+      "value": "17.97",
+      "out": false
+     },
+     {
+      "id": "A3",
+      "colour": "GAPDH",
+      "label": "GAPDH in C1",
+      "value": "17.85",
+      "out": false
+     },
+     {
+      "id": "A4",
+      "colour": "GAPDH",
+      "label": "GAPDH in C2",
+      "value": "17.86",
+      "out": false
+     },
+     {
+      "id": "A5",
+      "colour": "GAPDH",
+      "label": "GAPDH in C2",
+      "value": "17.91",
+      "out": false
+     },
+     {
+      "id": "A6",
+      "colour": "GAPDH",
+      "label": "GAPDH in C2",
+      "value": "17.96",
+      "out": false
+     },
+     {
+      "id": "A7",
+      "colour": "GAPDH",
+      "label": "GAPDH in C3",
+      "value": "17.79",
+      "out": false
+     },
+     {
+      "id": "A8",
+      "colour": "GAPDH",
+      "label": "GAPDH in C3",
+      "value": "17.95",
+      "out": false
+     },
+     {
+      "id": "A9",
+      "colour": "GAPDH",
+      "label": "GAPDH in C3",
+      "value": "17.93",
+      "out": false
+     },
+     {
+      "id": "A10",
+      "colour": "GAPDH",
+      "label": "GAPDH in T1",
+      "value": "18.76",
+      "out": false
+     },
+     {
+      "id": "A11",
+      "colour": "GAPDH",
+      "label": "GAPDH in T1",
+      "value": "18.68",
+      "out": false
+     },
+     {
+      "id": "A12",
+      "colour": "GAPDH",
+      "label": "GAPDH in T1",
+      "value": "18.66",
+      "out": false
+     },
+     {
+      "id": "B1",
+      "colour": "GAPDH",
+      "label": "GAPDH in T2",
+      "value": "18.92",
+      "out": false
+     },
+     {
+      "id": "B2",
+      "colour": "GAPDH",
+      "label": "GAPDH in T2",
+      "value": "18.88",
+      "out": false
+     },
+     {
+      "id": "B3",
+      "colour": "GAPDH",
+      "label": "GAPDH in T2",
+      "value": "18.85",
+      "out": false
+     },
+     {
+      "id": "B4",
+      "colour": "GAPDH",
+      "label": "GAPDH in T3",
+      "value": "18.34",
+      "out": false
+     },
+     {
+      "id": "B5",
+      "colour": "GAPDH",
+      "label": "GAPDH in T3",
+      "value": "18.30",
+      "out": false
+     },
+     {
+      "id": "B6",
+      "colour": "GAPDH",
+      "label": "GAPDH in T3",
+      "value": "18.32",
+      "out": false
+     },
+     {
+      "id": "B7",
+      "colour": "IL6",
+      "label": "IL6 in C1",
+      "value": "32.52",
+      "out": false
+     },
+     {
+      "id": "B8",
+      "colour": "IL6",
+      "label": "IL6 in C1",
+      "value": "32.56",
+      "out": false
+     },
+     {
+      "id": "B9",
+      "colour": "IL6",
+      "label": "IL6 in C1",
+      "value": "32.49",
+      "out": false
+     },
+     {
+      "id": "B10",
+      "colour": "IL6",
+      "label": "IL6 in C2",
+      "value": "32.01",
+      "out": false
+     },
+     {
+      "id": "B11",
+      "colour": "IL6",
+      "label": "IL6 in C2",
+      "value": "31.84",
+      "out": false
+     },
+     {
+      "id": "B12",
+      "colour": "IL6",
+      "label": "IL6 in C2",
+      "value": "31.94",
+      "out": false
+     },
+     {
+      "id": "C1",
+      "colour": "IL6",
+      "label": "IL6 in C3",
+      "value": "32.03",
+      "out": false
+     },
+     {
+      "id": "C2",
+      "colour": "IL6",
+      "label": "IL6 in C3",
+      "value": "31.97",
+      "out": false
+     },
+     {
+      "id": "C3",
+      "colour": "IL6",
+      "label": "IL6 in C3",
+      "value": "32.05",
+      "out": false
+     },
+     {
+      "id": "C4",
+      "colour": "IL6",
+      "label": "IL6 in T1",
+      "value": "27.12",
+      "out": false
+     },
+     {
+      "id": "C5",
+      "colour": "IL6",
+      "label": "IL6 in T1",
+      "value": "27.19",
+      "out": false
+     },
+     {
+      "id": "C6",
+      "colour": "IL6",
+      "label": "IL6 in T1",
+      "value": "27.02",
+      "out": false
+     },
+     {
+      "id": "C7",
+      "colour": "IL6",
+      "label": "IL6 in T2",
+      "value": "26.28",
+      "out": false
+     },
+     {
+      "id": "C8",
+      "colour": "IL6",
+      "label": "IL6 in T2",
+      "value": "26.22",
+      "out": false
+     },
+     {
+      "id": "C9",
+      "colour": "IL6",
+      "label": "IL6 in T2",
+      "value": "26.26",
+      "out": false
+     },
+     {
+      "id": "C10",
+      "colour": "IL6",
+      "label": "IL6 in T3",
+      "value": "26.25",
+      "out": false
+     },
+     {
+      "id": "C11",
+      "colour": "IL6",
+      "label": "IL6 in T3",
+      "value": "26.37",
+      "out": false
+     },
+     {
+      "id": "C12",
+      "colour": "IL6",
+      "label": "IL6 in T3",
+      "value": "26.26",
+      "out": false
+     },
+     {
+      "id": "D1",
+      "colour": "TNF",
+      "label": "TNF in C1",
+      "value": "27.53",
+      "out": false
+     },
+     {
+      "id": "D2",
+      "colour": "TNF",
+      "label": "TNF in C1",
+      "value": "27.62",
+      "out": false
+     },
+     {
+      "id": "D3",
+      "colour": "TNF",
+      "label": "TNF in C1",
+      "value": "27.57",
+      "out": false
+     },
+     {
+      "id": "D4",
+      "colour": "TNF",
+      "label": "TNF in C2",
+      "value": "27.29",
+      "out": false
+     },
+     {
+      "id": "D5",
+      "colour": "TNF",
+      "label": "TNF in C2",
+      "value": "27.42",
+      "out": false
+     },
+     {
+      "id": "D6",
+      "colour": "TNF",
+      "label": "TNF in C2",
+      "value": "27.33",
+      "out": false
+     },
+     {
+      "id": "D7",
+      "colour": "TNF",
+      "label": "TNF in C3",
+      "value": "27.47",
+      "out": false
+     },
+     {
+      "id": "D8",
+      "colour": "TNF",
+      "label": "TNF in C3",
+      "value": "27.43",
+      "out": false
+     },
+     {
+      "id": "D9",
+      "colour": "TNF",
+      "label": "TNF in C3",
+      "value": "27.35",
+      "out": false
+     },
+     {
+      "id": "D10",
+      "colour": "TNF",
+      "label": "TNF in T1",
+      "value": "25.43",
+      "out": false
+     },
+     {
+      "id": "D11",
+      "colour": "TNF",
+      "label": "TNF in T1",
+      "value": "25.52",
+      "out": false
+     },
+     {
+      "id": "D12",
+      "colour": "TNF",
+      "label": "TNF in T1",
+      "value": "25.36",
+      "out": false
+     },
+     {
+      "id": "E1",
+      "colour": "TNF",
+      "label": "TNF in T2",
+      "value": "25.38",
+      "out": false
+     },
+     {
+      "id": "E2",
+      "colour": "TNF",
+      "label": "TNF in T2",
+      "value": "25.36",
+      "out": false
+     },
+     {
+      "id": "E3",
+      "colour": "TNF",
+      "label": "TNF in T2",
+      "value": "25.36",
+      "out": false
+     },
+     {
+      "id": "E4",
+      "colour": "TNF",
+      "label": "TNF in T3",
+      "value": "25.20",
+      "out": false
+     },
+     {
+      "id": "E5",
+      "colour": "TNF",
+      "label": "TNF in T3",
+      "value": "25.16",
+      "out": false
+     },
+     {
+      "id": "E6",
+      "colour": "TNF",
+      "label": "TNF in T3",
+      "value": "25.21",
+      "out": false
+     },
+     {
+      "id": "E7",
+      "colour": "HMOX1",
+      "label": "HMOX1 in C1",
+      "value": "24.27",
+      "out": false
+     },
+     {
+      "id": "E8",
+      "colour": "HMOX1",
+      "label": "HMOX1 in C1",
+      "value": "24.23",
+      "out": false
+     },
+     {
+      "id": "E9",
+      "colour": "HMOX1",
+      "label": "HMOX1 in C1",
+      "value": "24.23",
+      "out": false
+     },
+     {
+      "id": "E10",
+      "colour": "HMOX1",
+      "label": "HMOX1 in C2",
+      "value": "24.25",
+      "out": false
+     },
+     {
+      "id": "E11",
+      "colour": "HMOX1",
+      "label": "HMOX1 in C2",
+      "value": "24.21",
+      "out": false
+     },
+     {
+      "id": "E12",
+      "colour": "HMOX1",
+      "label": "HMOX1 in C2",
+      "value": "24.26",
+      "out": false
+     },
+     {
+      "id": "F1",
+      "colour": "HMOX1",
+      "label": "HMOX1 in C3",
+      "value": "24.42",
+      "out": false
+     },
+     {
+      "id": "F2",
+      "colour": "HMOX1",
+      "label": "HMOX1 in C3",
+      "value": "24.39",
+      "out": false
+     },
+     {
+      "id": "F3",
+      "colour": "HMOX1",
+      "label": "HMOX1 in C3",
+      "value": "24.60",
+      "out": false
+     },
+     {
+      "id": "F4",
+      "colour": "HMOX1",
+      "label": "HMOX1 in T1",
+      "value": "22.74",
+      "out": false
+     },
+     {
+      "id": "F5",
+      "colour": "HMOX1",
+      "label": "HMOX1 in T1",
+      "value": "22.73",
+      "out": false
+     },
+     {
+      "id": "F6",
+      "colour": "HMOX1",
+      "label": "HMOX1 in T1",
+      "value": "22.57",
+      "out": false
+     },
+     {
+      "id": "F7",
+      "colour": "HMOX1",
+      "label": "HMOX1 in T2",
+      "value": "23.35",
+      "out": false
+     },
+     {
+      "id": "F8",
+      "colour": "HMOX1",
+      "label": "HMOX1 in T2",
+      "value": "23.22",
+      "out": false
+     },
+     {
+      "id": "F9",
+      "colour": "HMOX1",
+      "label": "HMOX1 in T2",
+      "value": "23.27",
+      "out": false
+     },
+     {
+      "id": "F10",
+      "colour": "HMOX1",
+      "label": "HMOX1 in T3",
+      "value": "22.56",
+      "out": false
+     },
+     {
+      "id": "F11",
+      "colour": "HMOX1",
+      "label": "HMOX1 in T3",
+      "value": "22.62",
+      "out": false
+     },
+     {
+      "id": "F12",
+      "colour": "HMOX1",
+      "label": "HMOX1 in T3",
+      "value": "22.66",
+      "out": false
+     }
+    ]
    }
   },
   {
@@ -382,7 +890,513 @@
     "notes": [],
     "results": 18,
     "input_fingerprint": "e1101e7d77eb",
-    "sentence": "Read all 72 wells in the file. Used 72, left out 0."
+    "sentence": "Read all 72 wells in the file. Used 72, left out 0.",
+    "plate": [
+     {
+      "id": "A1",
+      "colour": "GAPDH",
+      "label": "GAPDH in C1",
+      "value": "17.86",
+      "out": false
+     },
+     {
+      "id": "A2",
+      "colour": "GAPDH",
+      "label": "GAPDH in C1",
+      "value": "17.82",
+      "out": false
+     },
+     {
+      "id": "A3",
+      "colour": "GAPDH",
+      "label": "GAPDH in C1",
+      "value": "17.80",
+      "out": false
+     },
+     {
+      "id": "A4",
+      "colour": "GAPDH",
+      "label": "GAPDH in C2",
+      "value": "18.45",
+      "out": false
+     },
+     {
+      "id": "A5",
+      "colour": "GAPDH",
+      "label": "GAPDH in C2",
+      "value": "18.42",
+      "out": false
+     },
+     {
+      "id": "A6",
+      "colour": "GAPDH",
+      "label": "GAPDH in C2",
+      "value": "18.59",
+      "out": false
+     },
+     {
+      "id": "A7",
+      "colour": "GAPDH",
+      "label": "GAPDH in C3",
+      "value": "17.98",
+      "out": false
+     },
+     {
+      "id": "A8",
+      "colour": "GAPDH",
+      "label": "GAPDH in C3",
+      "value": "17.97",
+      "out": false
+     },
+     {
+      "id": "A9",
+      "colour": "GAPDH",
+      "label": "GAPDH in C3",
+      "value": "18.03",
+      "out": false
+     },
+     {
+      "id": "A10",
+      "colour": "GAPDH",
+      "label": "GAPDH in T1",
+      "value": "18.53",
+      "out": false
+     },
+     {
+      "id": "A11",
+      "colour": "GAPDH",
+      "label": "GAPDH in T1",
+      "value": "18.56",
+      "out": false
+     },
+     {
+      "id": "A12",
+      "colour": "GAPDH",
+      "label": "GAPDH in T1",
+      "value": "18.61",
+      "out": false
+     },
+     {
+      "id": "B1",
+      "colour": "GAPDH",
+      "label": "GAPDH in T2",
+      "value": "18.78",
+      "out": false
+     },
+     {
+      "id": "B2",
+      "colour": "GAPDH",
+      "label": "GAPDH in T2",
+      "value": "18.84",
+      "out": false
+     },
+     {
+      "id": "B3",
+      "colour": "GAPDH",
+      "label": "GAPDH in T2",
+      "value": "18.79",
+      "out": false
+     },
+     {
+      "id": "B4",
+      "colour": "GAPDH",
+      "label": "GAPDH in T3",
+      "value": "18.24",
+      "out": false
+     },
+     {
+      "id": "B5",
+      "colour": "GAPDH",
+      "label": "GAPDH in T3",
+      "value": "18.18",
+      "out": false
+     },
+     {
+      "id": "B6",
+      "colour": "GAPDH",
+      "label": "GAPDH in T3",
+      "value": "18.15",
+      "out": false
+     },
+     {
+      "id": "B7",
+      "colour": "IL6",
+      "label": "IL6 in C1",
+      "value": "32.98",
+      "out": false
+     },
+     {
+      "id": "B8",
+      "colour": "IL6",
+      "label": "IL6 in C1",
+      "value": "32.88",
+      "out": false
+     },
+     {
+      "id": "B9",
+      "colour": "IL6",
+      "label": "IL6 in C1",
+      "value": "32.91",
+      "out": false
+     },
+     {
+      "id": "B10",
+      "colour": "IL6",
+      "label": "IL6 in C2",
+      "value": "32.99",
+      "out": false
+     },
+     {
+      "id": "B11",
+      "colour": "IL6",
+      "label": "IL6 in C2",
+      "value": "33.07",
+      "out": false
+     },
+     {
+      "id": "B12",
+      "colour": "IL6",
+      "label": "IL6 in C2",
+      "value": "35.84",
+      "out": false
+     },
+     {
+      "id": "C1",
+      "colour": "IL6",
+      "label": "IL6 in C3",
+      "value": "32.60",
+      "out": false
+     },
+     {
+      "id": "C2",
+      "colour": "IL6",
+      "label": "IL6 in C3",
+      "value": "32.51",
+      "out": false
+     },
+     {
+      "id": "C3",
+      "colour": "IL6",
+      "label": "IL6 in C3",
+      "value": "32.51",
+      "out": false
+     },
+     {
+      "id": "C4",
+      "colour": "IL6",
+      "label": "IL6 in T1",
+      "value": "26.25",
+      "out": false
+     },
+     {
+      "id": "C5",
+      "colour": "IL6",
+      "label": "IL6 in T1",
+      "value": "26.34",
+      "out": false
+     },
+     {
+      "id": "C6",
+      "colour": "IL6",
+      "label": "IL6 in T1",
+      "value": "26.40",
+      "out": false
+     },
+     {
+      "id": "C7",
+      "colour": "IL6",
+      "label": "IL6 in T2",
+      "value": "26.14",
+      "out": false
+     },
+     {
+      "id": "C8",
+      "colour": "IL6",
+      "label": "IL6 in T2",
+      "value": "26.01",
+      "out": false
+     },
+     {
+      "id": "C9",
+      "colour": "IL6",
+      "label": "IL6 in T2",
+      "value": "26.04",
+      "out": false
+     },
+     {
+      "id": "C10",
+      "colour": "IL6",
+      "label": "IL6 in T3",
+      "value": "26.27",
+      "out": false
+     },
+     {
+      "id": "C11",
+      "colour": "IL6",
+      "label": "IL6 in T3",
+      "value": "26.22",
+      "out": false
+     },
+     {
+      "id": "C12",
+      "colour": "IL6",
+      "label": "IL6 in T3",
+      "value": "26.05",
+      "out": false
+     },
+     {
+      "id": "D1",
+      "colour": "TNF",
+      "label": "TNF in C1",
+      "value": "27.45",
+      "out": false
+     },
+     {
+      "id": "D2",
+      "colour": "TNF",
+      "label": "TNF in C1",
+      "value": "27.42",
+      "out": false
+     },
+     {
+      "id": "D3",
+      "colour": "TNF",
+      "label": "TNF in C1",
+      "value": "27.52",
+      "out": false
+     },
+     {
+      "id": "D4",
+      "colour": "TNF",
+      "label": "TNF in C2",
+      "value": "26.85",
+      "out": false
+     },
+     {
+      "id": "D5",
+      "colour": "TNF",
+      "label": "TNF in C2",
+      "value": "27.01",
+      "out": false
+     },
+     {
+      "id": "D6",
+      "colour": "TNF",
+      "label": "TNF in C2",
+      "value": "27.00",
+      "out": false
+     },
+     {
+      "id": "D7",
+      "colour": "TNF",
+      "label": "TNF in C3",
+      "value": "26.98",
+      "out": false
+     },
+     {
+      "id": "D8",
+      "colour": "TNF",
+      "label": "TNF in C3",
+      "value": "26.94",
+      "out": false
+     },
+     {
+      "id": "D9",
+      "colour": "TNF",
+      "label": "TNF in C3",
+      "value": "26.82",
+      "out": false
+     },
+     {
+      "id": "D10",
+      "colour": "TNF",
+      "label": "TNF in T1",
+      "value": "25.68",
+      "out": false
+     },
+     {
+      "id": "D11",
+      "colour": "TNF",
+      "label": "TNF in T1",
+      "value": "25.57",
+      "out": false
+     },
+     {
+      "id": "D12",
+      "colour": "TNF",
+      "label": "TNF in T1",
+      "value": "25.70",
+      "out": false
+     },
+     {
+      "id": "E1",
+      "colour": "TNF",
+      "label": "TNF in T2",
+      "value": "25.33",
+      "out": false
+     },
+     {
+      "id": "E2",
+      "colour": "TNF",
+      "label": "TNF in T2",
+      "value": "25.14",
+      "out": false
+     },
+     {
+      "id": "E3",
+      "colour": "TNF",
+      "label": "TNF in T2",
+      "value": "25.33",
+      "out": false
+     },
+     {
+      "id": "E4",
+      "colour": "TNF",
+      "label": "TNF in T3",
+      "value": "25.51",
+      "out": false
+     },
+     {
+      "id": "E5",
+      "colour": "TNF",
+      "label": "TNF in T3",
+      "value": "25.51",
+      "out": false
+     },
+     {
+      "id": "E6",
+      "colour": "TNF",
+      "label": "TNF in T3",
+      "value": "25.56",
+      "out": false
+     },
+     {
+      "id": "E7",
+      "colour": "HMOX1",
+      "label": "HMOX1 in C1",
+      "value": "24.21",
+      "out": false
+     },
+     {
+      "id": "E8",
+      "colour": "HMOX1",
+      "label": "HMOX1 in C1",
+      "value": "24.13",
+      "out": false
+     },
+     {
+      "id": "E9",
+      "colour": "HMOX1",
+      "label": "HMOX1 in C1",
+      "value": "24.29",
+      "out": false
+     },
+     {
+      "id": "E10",
+      "colour": "HMOX1",
+      "label": "HMOX1 in C2",
+      "value": "24.29",
+      "out": false
+     },
+     {
+      "id": "E11",
+      "colour": "HMOX1",
+      "label": "HMOX1 in C2",
+      "value": "24.28",
+      "out": false
+     },
+     {
+      "id": "E12",
+      "colour": "HMOX1",
+      "label": "HMOX1 in C2",
+      "value": "24.33",
+      "out": false
+     },
+     {
+      "id": "F1",
+      "colour": "HMOX1",
+      "label": "HMOX1 in C3",
+      "value": "23.41",
+      "out": false
+     },
+     {
+      "id": "F2",
+      "colour": "HMOX1",
+      "label": "HMOX1 in C3",
+      "value": "23.18",
+      "out": false
+     },
+     {
+      "id": "F3",
+      "colour": "HMOX1",
+      "label": "HMOX1 in C3",
+      "value": "23.40",
+      "out": false
+     },
+     {
+      "id": "F4",
+      "colour": "HMOX1",
+      "label": "HMOX1 in T1",
+      "value": "23.04",
+      "out": false
+     },
+     {
+      "id": "F5",
+      "colour": "HMOX1",
+      "label": "HMOX1 in T1",
+      "value": "22.85",
+      "out": false
+     },
+     {
+      "id": "F6",
+      "colour": "HMOX1",
+      "label": "HMOX1 in T1",
+      "value": "22.92",
+      "out": false
+     },
+     {
+      "id": "F7",
+      "colour": "HMOX1",
+      "label": "HMOX1 in T2",
+      "value": "22.42",
+      "out": false
+     },
+     {
+      "id": "F8",
+      "colour": "HMOX1",
+      "label": "HMOX1 in T2",
+      "value": "22.66",
+      "out": false
+     },
+     {
+      "id": "F9",
+      "colour": "HMOX1",
+      "label": "HMOX1 in T2",
+      "value": "22.60",
+      "out": false
+     },
+     {
+      "id": "F10",
+      "colour": "HMOX1",
+      "label": "HMOX1 in T3",
+      "value": "22.56",
+      "out": false
+     },
+     {
+      "id": "F11",
+      "colour": "HMOX1",
+      "label": "HMOX1 in T3",
+      "value": "22.63",
+      "out": false
+     },
+     {
+      "id": "F12",
+      "colour": "HMOX1",
+      "label": "HMOX1 in T3",
+      "value": "22.64",
+      "out": false
+     }
+    ]
    }
   },
   {
@@ -533,7 +1547,513 @@
     ],
     "results": 18,
     "input_fingerprint": "d430ca7fe7c3",
-    "sentence": "Read all 72 wells in the file. Used 71, left out 1."
+    "sentence": "Read all 72 wells in the file. Used 71, left out 1.",
+    "plate": [
+     {
+      "id": "A1",
+      "colour": "GAPDH",
+      "label": "GAPDH in C1",
+      "value": "18.30",
+      "out": false
+     },
+     {
+      "id": "A2",
+      "colour": "GAPDH",
+      "label": "GAPDH in C1",
+      "value": "18.12",
+      "out": false
+     },
+     {
+      "id": "A3",
+      "colour": "GAPDH",
+      "label": "GAPDH in C1",
+      "value": "18.04",
+      "out": false
+     },
+     {
+      "id": "A4",
+      "colour": "GAPDH",
+      "label": "GAPDH in C2",
+      "value": "18.32",
+      "out": false
+     },
+     {
+      "id": "A5",
+      "colour": "GAPDH",
+      "label": "GAPDH in C2",
+      "value": "18.31",
+      "out": false
+     },
+     {
+      "id": "A6",
+      "colour": "GAPDH",
+      "label": "GAPDH in C2",
+      "value": "18.32",
+      "out": false
+     },
+     {
+      "id": "A7",
+      "colour": "GAPDH",
+      "label": "GAPDH in C3",
+      "value": "18.14",
+      "out": false
+     },
+     {
+      "id": "A8",
+      "colour": "GAPDH",
+      "label": "GAPDH in C3",
+      "value": "18.13",
+      "out": false
+     },
+     {
+      "id": "A9",
+      "colour": "GAPDH",
+      "label": "GAPDH in C3",
+      "value": "18.18",
+      "out": false
+     },
+     {
+      "id": "A10",
+      "colour": "GAPDH",
+      "label": "GAPDH in T1",
+      "value": "18.31",
+      "out": false
+     },
+     {
+      "id": "A11",
+      "colour": "GAPDH",
+      "label": "GAPDH in T1",
+      "value": "18.28",
+      "out": false
+     },
+     {
+      "id": "A12",
+      "colour": "GAPDH",
+      "label": "GAPDH in T1",
+      "value": "18.13",
+      "out": false
+     },
+     {
+      "id": "B1",
+      "colour": "GAPDH",
+      "label": "GAPDH in T2",
+      "value": "18.51",
+      "out": false
+     },
+     {
+      "id": "B2",
+      "colour": "GAPDH",
+      "label": "GAPDH in T2",
+      "value": "18.60",
+      "out": false
+     },
+     {
+      "id": "B3",
+      "colour": "GAPDH",
+      "label": "GAPDH in T2",
+      "value": "18.63",
+      "out": false
+     },
+     {
+      "id": "B4",
+      "colour": "GAPDH",
+      "label": "GAPDH in T3",
+      "value": "18.33",
+      "out": false
+     },
+     {
+      "id": "B5",
+      "colour": "GAPDH",
+      "label": "GAPDH in T3",
+      "value": "18.53",
+      "out": false
+     },
+     {
+      "id": "B6",
+      "colour": "GAPDH",
+      "label": "GAPDH in T3",
+      "value": "18.35",
+      "out": false
+     },
+     {
+      "id": "B7",
+      "colour": "IL6",
+      "label": "IL6 in C1",
+      "value": "32.78",
+      "out": false
+     },
+     {
+      "id": "B8",
+      "colour": "IL6",
+      "label": "IL6 in C1",
+      "value": "32.82",
+      "out": false
+     },
+     {
+      "id": "B9",
+      "colour": "IL6",
+      "label": "IL6 in C1",
+      "value": "32.98",
+      "out": false
+     },
+     {
+      "id": "B10",
+      "colour": "IL6",
+      "label": "IL6 in C2",
+      "value": "31.99",
+      "out": false
+     },
+     {
+      "id": "B11",
+      "colour": "IL6",
+      "label": "IL6 in C2",
+      "value": "31.90",
+      "out": false
+     },
+     {
+      "id": "B12",
+      "colour": "IL6",
+      "label": "IL6 in C2",
+      "value": "31.95",
+      "out": false
+     },
+     {
+      "id": "C1",
+      "colour": "IL6",
+      "label": "IL6 in C3",
+      "value": "32.29",
+      "out": false
+     },
+     {
+      "id": "C2",
+      "colour": "IL6",
+      "label": "IL6 in C3",
+      "value": "32.21",
+      "out": false
+     },
+     {
+      "id": "C3",
+      "colour": "IL6",
+      "label": "IL6 in C3",
+      "value": "32.26",
+      "out": false
+     },
+     {
+      "id": "C4",
+      "colour": "IL6",
+      "label": "IL6 in T1",
+      "value": "26.36",
+      "out": false
+     },
+     {
+      "id": "C5",
+      "colour": "IL6",
+      "label": "IL6 in T1",
+      "value": "26.61",
+      "out": false
+     },
+     {
+      "id": "C6",
+      "colour": "IL6",
+      "label": "IL6 in T1",
+      "value": "26.48",
+      "out": false
+     },
+     {
+      "id": "C7",
+      "colour": "IL6",
+      "label": "IL6 in T2",
+      "value": "25.86",
+      "out": false
+     },
+     {
+      "id": "C8",
+      "colour": "IL6",
+      "label": "IL6 in T2",
+      "value": "25.99",
+      "out": false
+     },
+     {
+      "id": "C9",
+      "colour": "IL6",
+      "label": "IL6 in T2",
+      "value": "26.00",
+      "out": false
+     },
+     {
+      "id": "C10",
+      "colour": "IL6",
+      "label": "IL6 in T3",
+      "value": "26.17",
+      "out": false
+     },
+     {
+      "id": "C11",
+      "colour": "IL6",
+      "label": "IL6 in T3",
+      "value": "26.18",
+      "out": false
+     },
+     {
+      "id": "C12",
+      "colour": "IL6",
+      "label": "IL6 in T3",
+      "value": "26.25",
+      "out": false
+     },
+     {
+      "id": "D1",
+      "colour": "TNF",
+      "label": "TNF in C1",
+      "value": "27.18",
+      "out": false
+     },
+     {
+      "id": "D2",
+      "colour": "TNF",
+      "label": "TNF in C1",
+      "value": "27.03",
+      "out": false
+     },
+     {
+      "id": "D3",
+      "colour": "TNF",
+      "label": "TNF in C1",
+      "value": "27.04",
+      "out": false
+     },
+     {
+      "id": "D4",
+      "colour": "TNF",
+      "label": "TNF in C2",
+      "value": "27.37",
+      "out": false
+     },
+     {
+      "id": "D5",
+      "colour": "TNF",
+      "label": "TNF in C2",
+      "value": "27.30",
+      "out": false
+     },
+     {
+      "id": "D6",
+      "colour": "TNF",
+      "label": "TNF in C2",
+      "value": "27.36",
+      "out": false
+     },
+     {
+      "id": "D7",
+      "colour": "TNF",
+      "label": "TNF in C3",
+      "value": "27.25",
+      "out": false
+     },
+     {
+      "id": "D8",
+      "colour": "TNF",
+      "label": "TNF in C3",
+      "value": "27.29",
+      "out": false
+     },
+     {
+      "id": "D9",
+      "colour": "TNF",
+      "label": "TNF in C3",
+      "value": "27.23",
+      "out": false
+     },
+     {
+      "id": "D10",
+      "colour": "TNF",
+      "label": "TNF in T1",
+      "value": "25.42",
+      "out": false
+     },
+     {
+      "id": "D11",
+      "colour": "TNF",
+      "label": "TNF in T1",
+      "value": "Undetermined",
+      "out": true
+     },
+     {
+      "id": "D12",
+      "colour": "TNF",
+      "label": "TNF in T1",
+      "value": "25.26",
+      "out": false
+     },
+     {
+      "id": "E1",
+      "colour": "TNF",
+      "label": "TNF in T2",
+      "value": "25.35",
+      "out": false
+     },
+     {
+      "id": "E2",
+      "colour": "TNF",
+      "label": "TNF in T2",
+      "value": "25.39",
+      "out": false
+     },
+     {
+      "id": "E3",
+      "colour": "TNF",
+      "label": "TNF in T2",
+      "value": "25.19",
+      "out": false
+     },
+     {
+      "id": "E4",
+      "colour": "TNF",
+      "label": "TNF in T3",
+      "value": "25.07",
+      "out": false
+     },
+     {
+      "id": "E5",
+      "colour": "TNF",
+      "label": "TNF in T3",
+      "value": "24.97",
+      "out": false
+     },
+     {
+      "id": "E6",
+      "colour": "TNF",
+      "label": "TNF in T3",
+      "value": "25.19",
+      "out": false
+     },
+     {
+      "id": "E7",
+      "colour": "HMOX1",
+      "label": "HMOX1 in C1",
+      "value": "24.25",
+      "out": false
+     },
+     {
+      "id": "E8",
+      "colour": "HMOX1",
+      "label": "HMOX1 in C1",
+      "value": "24.39",
+      "out": false
+     },
+     {
+      "id": "E9",
+      "colour": "HMOX1",
+      "label": "HMOX1 in C1",
+      "value": "24.49",
+      "out": false
+     },
+     {
+      "id": "E10",
+      "colour": "HMOX1",
+      "label": "HMOX1 in C2",
+      "value": "23.81",
+      "out": false
+     },
+     {
+      "id": "E11",
+      "colour": "HMOX1",
+      "label": "HMOX1 in C2",
+      "value": "23.86",
+      "out": false
+     },
+     {
+      "id": "E12",
+      "colour": "HMOX1",
+      "label": "HMOX1 in C2",
+      "value": "23.88",
+      "out": false
+     },
+     {
+      "id": "F1",
+      "colour": "HMOX1",
+      "label": "HMOX1 in C3",
+      "value": "23.60",
+      "out": false
+     },
+     {
+      "id": "F2",
+      "colour": "HMOX1",
+      "label": "HMOX1 in C3",
+      "value": "23.71",
+      "out": false
+     },
+     {
+      "id": "F3",
+      "colour": "HMOX1",
+      "label": "HMOX1 in C3",
+      "value": "23.79",
+      "out": false
+     },
+     {
+      "id": "F4",
+      "colour": "HMOX1",
+      "label": "HMOX1 in T1",
+      "value": "22.26",
+      "out": false
+     },
+     {
+      "id": "F5",
+      "colour": "HMOX1",
+      "label": "HMOX1 in T1",
+      "value": "22.23",
+      "out": false
+     },
+     {
+      "id": "F6",
+      "colour": "HMOX1",
+      "label": "HMOX1 in T1",
+      "value": "22.41",
+      "out": false
+     },
+     {
+      "id": "F7",
+      "colour": "HMOX1",
+      "label": "HMOX1 in T2",
+      "value": "22.54",
+      "out": false
+     },
+     {
+      "id": "F8",
+      "colour": "HMOX1",
+      "label": "HMOX1 in T2",
+      "value": "22.55",
+      "out": false
+     },
+     {
+      "id": "F9",
+      "colour": "HMOX1",
+      "label": "HMOX1 in T2",
+      "value": "22.59",
+      "out": false
+     },
+     {
+      "id": "F10",
+      "colour": "HMOX1",
+      "label": "HMOX1 in T3",
+      "value": "22.77",
+      "out": false
+     },
+     {
+      "id": "F11",
+      "colour": "HMOX1",
+      "label": "HMOX1 in T3",
+      "value": "22.84",
+      "out": false
+     },
+     {
+      "id": "F12",
+      "colour": "HMOX1",
+      "label": "HMOX1 in T3",
+      "value": "22.78",
+      "out": false
+     }
+    ]
    }
   },
   {
@@ -684,8 +2204,530 @@
     "notes": [],
     "results": 18,
     "input_fingerprint": "9b7e60a90303",
-    "sentence": "Read all 72 wells in the file. Used 72, left out 0."
+    "sentence": "Read all 72 wells in the file. Used 72, left out 0.",
+    "plate": [
+     {
+      "id": "A1",
+      "colour": "GAPDH",
+      "label": "GAPDH in C1",
+      "value": "20.00",
+      "out": false
+     },
+     {
+      "id": "A2",
+      "colour": "GAPDH",
+      "label": "GAPDH in C1",
+      "value": "20.00",
+      "out": false
+     },
+     {
+      "id": "A3",
+      "colour": "GAPDH",
+      "label": "GAPDH in C1",
+      "value": "20.00",
+      "out": false
+     },
+     {
+      "id": "A4",
+      "colour": "GAPDH",
+      "label": "GAPDH in C2",
+      "value": "20.00",
+      "out": false
+     },
+     {
+      "id": "A5",
+      "colour": "GAPDH",
+      "label": "GAPDH in C2",
+      "value": "20.00",
+      "out": false
+     },
+     {
+      "id": "A6",
+      "colour": "GAPDH",
+      "label": "GAPDH in C2",
+      "value": "20.00",
+      "out": false
+     },
+     {
+      "id": "A7",
+      "colour": "GAPDH",
+      "label": "GAPDH in C3",
+      "value": "20.00",
+      "out": false
+     },
+     {
+      "id": "A8",
+      "colour": "GAPDH",
+      "label": "GAPDH in C3",
+      "value": "20.00",
+      "out": false
+     },
+     {
+      "id": "A9",
+      "colour": "GAPDH",
+      "label": "GAPDH in C3",
+      "value": "20.00",
+      "out": false
+     },
+     {
+      "id": "A10",
+      "colour": "GAPDH",
+      "label": "GAPDH in T1",
+      "value": "20.00",
+      "out": false
+     },
+     {
+      "id": "A11",
+      "colour": "GAPDH",
+      "label": "GAPDH in T1",
+      "value": "20.00",
+      "out": false
+     },
+     {
+      "id": "A12",
+      "colour": "GAPDH",
+      "label": "GAPDH in T1",
+      "value": "20.00",
+      "out": false
+     },
+     {
+      "id": "B1",
+      "colour": "GAPDH",
+      "label": "GAPDH in T2",
+      "value": "20.00",
+      "out": false
+     },
+     {
+      "id": "B2",
+      "colour": "GAPDH",
+      "label": "GAPDH in T2",
+      "value": "20.00",
+      "out": false
+     },
+     {
+      "id": "B3",
+      "colour": "GAPDH",
+      "label": "GAPDH in T2",
+      "value": "20.00",
+      "out": false
+     },
+     {
+      "id": "B4",
+      "colour": "GAPDH",
+      "label": "GAPDH in T3",
+      "value": "20.00",
+      "out": false
+     },
+     {
+      "id": "B5",
+      "colour": "GAPDH",
+      "label": "GAPDH in T3",
+      "value": "20.00",
+      "out": false
+     },
+     {
+      "id": "B6",
+      "colour": "GAPDH",
+      "label": "GAPDH in T3",
+      "value": "20.00",
+      "out": false
+     },
+     {
+      "id": "B7",
+      "colour": "IL6",
+      "label": "IL6 in C1",
+      "value": "26.00",
+      "out": false
+     },
+     {
+      "id": "B8",
+      "colour": "IL6",
+      "label": "IL6 in C1",
+      "value": "26.00",
+      "out": false
+     },
+     {
+      "id": "B9",
+      "colour": "IL6",
+      "label": "IL6 in C1",
+      "value": "26.00",
+      "out": false
+     },
+     {
+      "id": "B10",
+      "colour": "IL6",
+      "label": "IL6 in C2",
+      "value": "26.00",
+      "out": false
+     },
+     {
+      "id": "B11",
+      "colour": "IL6",
+      "label": "IL6 in C2",
+      "value": "26.00",
+      "out": false
+     },
+     {
+      "id": "B12",
+      "colour": "IL6",
+      "label": "IL6 in C2",
+      "value": "26.00",
+      "out": false
+     },
+     {
+      "id": "C1",
+      "colour": "IL6",
+      "label": "IL6 in C3",
+      "value": "26.00",
+      "out": false
+     },
+     {
+      "id": "C2",
+      "colour": "IL6",
+      "label": "IL6 in C3",
+      "value": "26.00",
+      "out": false
+     },
+     {
+      "id": "C3",
+      "colour": "IL6",
+      "label": "IL6 in C3",
+      "value": "26.00",
+      "out": false
+     },
+     {
+      "id": "C4",
+      "colour": "IL6",
+      "label": "IL6 in T1",
+      "value": "24.00",
+      "out": false
+     },
+     {
+      "id": "C5",
+      "colour": "IL6",
+      "label": "IL6 in T1",
+      "value": "24.00",
+      "out": false
+     },
+     {
+      "id": "C6",
+      "colour": "IL6",
+      "label": "IL6 in T1",
+      "value": "37.20",
+      "out": false
+     },
+     {
+      "id": "C7",
+      "colour": "IL6",
+      "label": "IL6 in T2",
+      "value": "24.00",
+      "out": false
+     },
+     {
+      "id": "C8",
+      "colour": "IL6",
+      "label": "IL6 in T2",
+      "value": "24.00",
+      "out": false
+     },
+     {
+      "id": "C9",
+      "colour": "IL6",
+      "label": "IL6 in T2",
+      "value": "24.00",
+      "out": false
+     },
+     {
+      "id": "C10",
+      "colour": "IL6",
+      "label": "IL6 in T3",
+      "value": "24.00",
+      "out": false
+     },
+     {
+      "id": "C11",
+      "colour": "IL6",
+      "label": "IL6 in T3",
+      "value": "24.00",
+      "out": false
+     },
+     {
+      "id": "C12",
+      "colour": "IL6",
+      "label": "IL6 in T3",
+      "value": "24.00",
+      "out": false
+     },
+     {
+      "id": "D1",
+      "colour": "TNF",
+      "label": "TNF in C1",
+      "value": "25.00",
+      "out": false
+     },
+     {
+      "id": "D2",
+      "colour": "TNF",
+      "label": "TNF in C1",
+      "value": "25.00",
+      "out": false
+     },
+     {
+      "id": "D3",
+      "colour": "TNF",
+      "label": "TNF in C1",
+      "value": "25.00",
+      "out": false
+     },
+     {
+      "id": "D4",
+      "colour": "TNF",
+      "label": "TNF in C2",
+      "value": "25.00",
+      "out": false
+     },
+     {
+      "id": "D5",
+      "colour": "TNF",
+      "label": "TNF in C2",
+      "value": "25.00",
+      "out": false
+     },
+     {
+      "id": "D6",
+      "colour": "TNF",
+      "label": "TNF in C2",
+      "value": "25.00",
+      "out": false
+     },
+     {
+      "id": "D7",
+      "colour": "TNF",
+      "label": "TNF in C3",
+      "value": "25.00",
+      "out": false
+     },
+     {
+      "id": "D8",
+      "colour": "TNF",
+      "label": "TNF in C3",
+      "value": "25.00",
+      "out": false
+     },
+     {
+      "id": "D9",
+      "colour": "TNF",
+      "label": "TNF in C3",
+      "value": "25.00",
+      "out": false
+     },
+     {
+      "id": "D10",
+      "colour": "TNF",
+      "label": "TNF in T1",
+      "value": "24.00",
+      "out": false
+     },
+     {
+      "id": "D11",
+      "colour": "TNF",
+      "label": "TNF in T1",
+      "value": "24.00",
+      "out": false
+     },
+     {
+      "id": "D12",
+      "colour": "TNF",
+      "label": "TNF in T1",
+      "value": "24.00",
+      "out": false
+     },
+     {
+      "id": "E1",
+      "colour": "TNF",
+      "label": "TNF in T2",
+      "value": "24.00",
+      "out": false
+     },
+     {
+      "id": "E2",
+      "colour": "TNF",
+      "label": "TNF in T2",
+      "value": "24.00",
+      "out": false
+     },
+     {
+      "id": "E3",
+      "colour": "TNF",
+      "label": "TNF in T2",
+      "value": "24.00",
+      "out": false
+     },
+     {
+      "id": "E4",
+      "colour": "TNF",
+      "label": "TNF in T3",
+      "value": "24.00",
+      "out": false
+     },
+     {
+      "id": "E5",
+      "colour": "TNF",
+      "label": "TNF in T3",
+      "value": "24.00",
+      "out": false
+     },
+     {
+      "id": "E6",
+      "colour": "TNF",
+      "label": "TNF in T3",
+      "value": "24.00",
+      "out": false
+     },
+     {
+      "id": "E7",
+      "colour": "HMOX1",
+      "label": "HMOX1 in C1",
+      "value": "23.00",
+      "out": false
+     },
+     {
+      "id": "E8",
+      "colour": "HMOX1",
+      "label": "HMOX1 in C1",
+      "value": "23.00",
+      "out": false
+     },
+     {
+      "id": "E9",
+      "colour": "HMOX1",
+      "label": "HMOX1 in C1",
+      "value": "23.00",
+      "out": false
+     },
+     {
+      "id": "E10",
+      "colour": "HMOX1",
+      "label": "HMOX1 in C2",
+      "value": "23.00",
+      "out": false
+     },
+     {
+      "id": "E11",
+      "colour": "HMOX1",
+      "label": "HMOX1 in C2",
+      "value": "23.00",
+      "out": false
+     },
+     {
+      "id": "E12",
+      "colour": "HMOX1",
+      "label": "HMOX1 in C2",
+      "value": "23.00",
+      "out": false
+     },
+     {
+      "id": "F1",
+      "colour": "HMOX1",
+      "label": "HMOX1 in C3",
+      "value": "23.00",
+      "out": false
+     },
+     {
+      "id": "F2",
+      "colour": "HMOX1",
+      "label": "HMOX1 in C3",
+      "value": "23.00",
+      "out": false
+     },
+     {
+      "id": "F3",
+      "colour": "HMOX1",
+      "label": "HMOX1 in C3",
+      "value": "23.00",
+      "out": false
+     },
+     {
+      "id": "F4",
+      "colour": "HMOX1",
+      "label": "HMOX1 in T1",
+      "value": "24.00",
+      "out": false
+     },
+     {
+      "id": "F5",
+      "colour": "HMOX1",
+      "label": "HMOX1 in T1",
+      "value": "24.00",
+      "out": false
+     },
+     {
+      "id": "F6",
+      "colour": "HMOX1",
+      "label": "HMOX1 in T1",
+      "value": "24.00",
+      "out": false
+     },
+     {
+      "id": "F7",
+      "colour": "HMOX1",
+      "label": "HMOX1 in T2",
+      "value": "24.00",
+      "out": false
+     },
+     {
+      "id": "F8",
+      "colour": "HMOX1",
+      "label": "HMOX1 in T2",
+      "value": "24.00",
+      "out": false
+     },
+     {
+      "id": "F9",
+      "colour": "HMOX1",
+      "label": "HMOX1 in T2",
+      "value": "24.00",
+      "out": false
+     },
+     {
+      "id": "F10",
+      "colour": "HMOX1",
+      "label": "HMOX1 in T3",
+      "value": "24.00",
+      "out": false
+     },
+     {
+      "id": "F11",
+      "colour": "HMOX1",
+      "label": "HMOX1 in T3",
+      "value": "24.00",
+      "out": false
+     },
+     {
+      "id": "F12",
+      "colour": "HMOX1",
+      "label": "HMOX1 in T3",
+      "value": "24.00",
+      "out": false
+     }
+    ]
    }
   }
- ]
+ ],
+ "track_record": {
+  "checks": 1,
+  "matched": 0,
+  "since": "2026-10-21T18:54:23",
+  "last_differed": {
+   "at": "2026-10-21T18:54:23",
+   "matched": false,
+   "status": "differs",
+   "fingerprint": "4ab9a3ade104",
+   "sentence": "Differs on Plate 2: 6 of 18 results changed (biggest: IL6 in T2 is 219.96, the old way says 177.16).",
+   "since": "Since Anders checked it: 3 lines of code removed."
+  },
+  "recent": [
+   false
+  ]
+ }
 }

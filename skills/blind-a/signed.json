@@ -1,0 +1,8 @@
+{
+  "settings": {
+    "reference_gene": "GAPDH",
+    "control_group": "control",
+    "failed_well_ct": 35
+  },
+  "runtime": "Python 3.12"
+}

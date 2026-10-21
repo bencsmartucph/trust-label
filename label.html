@@ -95,6 +95,23 @@ button.row:hover .k, button.row.sel .k { text-decoration: underline; text-underl
 .fine { margin: 2px 0 0; font-size: 14px; color: var(--grey); }
 .fp { font: 500 13px/1.4 var(--mono); color: var(--grey); letter-spacing: .02em; }
 .halflife { height: 6px; background: var(--hair); margin: 6px 0 2px; }
+.status .since { margin: 8px 0 0; padding-top: 8px; border-top: 1px dashed rgba(138, 90, 0, .45); font-weight: 600; }
+.strip { display: flex; flex-wrap: wrap; gap: 3px; margin: 8px 0 4px; }
+.strip i { width: 7px; height: 16px; background: var(--green); }
+.strip i.warn { background: var(--amber); }
+.tick .v { animation: tickin .45s ease both; animation-delay: calc(var(--i) * 170ms + 120ms); }
+@keyframes tickin { from { opacity: 0; transform: translateX(-10px); } to { opacity: 1; transform: none; } }
+.plate { display: flex; flex-wrap: wrap; gap: 14px 22px; align-items: flex-start; margin-top: 12px; }
+.plate-grid { display: grid; grid-template-columns: 14px repeat(12, 18px); gap: 4px; font: 500 10px/18px var(--mono); color: var(--grey); }
+.plate-grid .ph { text-align: center; }
+.well { width: 18px; height: 18px; border-radius: 50%; background: var(--c); display: inline-block; position: relative; flex: none; }
+.well.empty { background: none; border: 1px solid var(--hair); }
+.well.out { background: var(--card); border: 2px solid var(--amber); }
+.well.out::after { content: ""; position: absolute; left: 50%; top: -2px; bottom: -2px; width: 2px; background: var(--amber); transform: translateX(-50%) rotate(45deg); }
+.plate-legend { display: grid; gap: 6px; font-size: 14px; }
+.plate-legend span { display: flex; align-items: center; gap: 8px; }
+.plate-legend .well { width: 12px; height: 12px; }
+.plate-legend .well.out::after { top: -2px; bottom: -2px; }
 .halflife i { display: block; height: 100%; background: var(--ink); }
 .label ol { margin: 8px 0 4px; padding-left: 22px; font-size: 16px; }
 .label ol li { margin: 3px 0; }
@@ -196,7 +213,7 @@ table.sxs { width: 100%; border-collapse: collapse; font-size: 16px; }
 <main id="app"><p class="note">Reading the shelf…</p></main>
 
 <script>
-const state = { labels: [], raw: "", prev: {}, flash: {}, job: {}, run: null, runError: "", pick: null, diff: null, checking: false, offline: false };
+const state = { labels: [], raw: "", prev: {}, flash: {}, tick: {}, job: {}, run: null, runError: "", pick: null, diff: null, checking: false, offline: false };
 
 const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
 const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
@@ -225,7 +242,7 @@ function take(text) {
   state.labels = JSON.parse(text);
   for (const l of state.labels) {
     const before = state.prev[l.id];
-    if (before && before !== l.status) { state.flash[l.id] = true; delete state.job[l.id]; }
+    if (before && before !== l.status) { state.flash[l.id] = true; state.tick[l.id] = true; delete state.job[l.id]; }
     state.prev[l.id] = l.status;
   }
   render();
@@ -250,6 +267,7 @@ function render() {
     });
   }
   state.flash = {};
+  state.tick = {};
 }
 
 /* ---------- shelf ---------- */
@@ -283,16 +301,50 @@ function shelfView() {
 }
 
 /* ---------- label ---------- */
-function evidenceRow(l, e, compact) {
+function evidenceRow(l, e, compact, i) {
   const good = e.result === "identical";
   const known = e.kind === "known_answer";
   const what = known ? "Known answer" : "Old way";
   const detail = known ? "4, 2 and ½" : `${e.title}, ${dayShort(e.date)}`;
   const value = good ? (known ? "exact ✓" : "identical ✓") : "differs ≠";
   const sel = state.job[l.id] === e.id ? " sel" : "";
+  const tick = state.tick[l.id] ? ` tick" style="--i:${i}` : "";
   const inner = `<span class="k">${what} <em>${esc(detail)}</em></span><span class="lead"></span><span class="v ${good ? "ok" : "warn"}">${value}</span>`;
-  return compact ? `<div class="row">${inner}</div>`
-    : `<button class="row${sel}" data-action="job" data-app="${esc(l.id)}" data-job="${esc(e.id)}" title="Show side by side">${inner}</button>`;
+  return compact ? `<div class="row${tick}">${inner}</div>`
+    : `<button class="row${sel}${tick}" data-action="job" data-app="${esc(l.id)}" data-job="${esc(e.id)}" title="Show side by side">${inner}</button>`;
+}
+
+function trackRecord(t) {
+  if (!t) return "";
+  const last = t.last_differed;
+  return `
+      <div class="row"><span class="k">Track record</span><span class="lead"></span>
+        <span class="v">${t.checks} check${t.checks === 1 ? "" : "s"} · ${t.matched} matched</span></div>
+      <div class="strip" aria-hidden="true">${t.recent.map(m => `<i class="${m ? "" : "warn"}"></i>`).join("")}</div>
+      <p class="fine">Since ${esc(dayShort(t.since))} at ${esc(time(t.since))}. ${last
+        ? `Last differed ${esc(dayShort(last.at))} at ${esc(time(last.at))}.${last.since ? " " + esc(last.since) : ""}`
+        : "It has matched every time."}</p>`;
+}
+
+const PLATE_COLOURS = ["#8e9890", "#2a6fc4", "#6b5ca5", "#2b7f86", "#a0522d", "#4a6b3a"];
+function plateMap(wells) {
+  if (!wells || !wells.length) return "";
+  const by = Object.fromEntries(wells.map(w => [w.id, w]));
+  const keys = [...new Set(wells.map(w => w.colour))];
+  const hue = k => PLATE_COLOURS[keys.indexOf(k) % PLATE_COLOURS.length];
+  let cells = `<span></span>` + Array.from({ length: 12 }, (_, i) => `<span class="ph">${i + 1}</span>`).join("");
+  for (const r of "ABCDEFGH") {
+    cells += `<span class="ph">${r}</span>`;
+    for (let c = 1; c <= 12; c++) {
+      const w = by[r + c];
+      cells += w
+        ? `<span class="well${w.out ? " out" : ""}" style="--c:${hue(w.colour)}" title="${esc(`${w.id} · ${w.label} · Ct ${w.value}${w.out ? " · left out" : ""}`)}"></span>`
+        : `<span class="well empty"></span>`;
+    }
+  }
+  const legend = keys.map(k => `<span><i class="well" style="--c:${hue(k)}"></i>${esc(k)}</span>`).join("")
+    + `<span><i class="well out"></i>left out</span>`;
+  return `<div class="plate"><div class="plate-grid" role="img" aria-label="Plate map">${cells}</div><div class="plate-legend">${legend}</div></div>`;
 }
 
 function labelCard(l, opts = {}) {
@@ -310,19 +362,20 @@ function labelCard(l, opts = {}) {
     <div class="rule thick"></div>
     <div class="status ${tone(l)}" data-status="${esc(l.id)}">
       <span class="dot"></span>
-      <div><b>${esc(l.headline)}</b><p>${esc(l.sentence)}</p></div>
+      <div><b>${esc(l.headline)}</b><p>${esc(l.sentence)}</p>${l.since ? `<p class="since">${esc(l.since)}</p>` : ""}</div>
     </div>
     <div class="rule mid"></div>
 
     <section>
       <h3>Checked by code <span>${l.last_run ? "at " + time(l.last_run) : ""}</span></h3>
-      ${l.evidence.map(e => evidenceRow(l, e, opts.compact)).join("")}
+      ${l.evidence.map((e, i) => evidenceRow(l, e, opts.compact, i)).join("")}
       <div class="row"><span class="k">This version</span><span class="lead"></span>
         <span class="v ${l.signed ? "ok" : "warn"}">${l.signed ? `the one ${esc(who)} checked ✓` : (c.by ? `not the one ${esc(who)} checked ≠` : "never checked ≠")}</span></div>
       <p class="fp">code fingerprint ${esc(l.fingerprint)}${c.skill_fingerprint && !l.signed ? ` · ${esc(who)} checked ${esc(c.skill_fingerprint)}` : ""}</p>
       <div class="row"><span class="k">Runs as</span><span class="lead"></span>
         <span class="v ${l.plain_code.ok ? "ok" : "warn"}">${l.plain_code.ok ? "plain code ✓" : "reaches outside ≠"}</span></div>
       <p class="fine">${esc(l.plain_code.sentence)}</p>
+      ${opts.compact ? "" : trackRecord(l.track_record)}
     </section>
     <div class="rule mid"></div>
 
@@ -380,7 +433,7 @@ function evidencePanel(l) {
     <p class="verdict ${good ? "ok-t" : "warn-t"}">${esc(e.sentence)}</p>
     <p class="source">${esc(e.title)} · ${esc(day(e.date))}. ${esc(e.source)}${e.kind === "old_way" ? `: ${esc(l.old_way)}` : ""}.</p>
     ${r ? `<div class="receipt"><div class="kicker">Receipt: what it actually read</div>${esc(r.sentence)}
-      ${r.notes.length ? `<ul>${r.notes.map(n => `<li>${esc(n)}</li>`).join("")}</ul>` : ""}</div>` : ""}
+      ${r.notes.length ? `<ul>${r.notes.map(n => `<li>${esc(n)}</li>`).join("")}</ul>` : ""}${plateMap(r.plate)}</div>` : ""}
     ${e.rows.length ? `<div class="scroll"><table class="sxs">
       <thead><tr><th>Result</th><th class="num">${oldName}</th><th class="num">This app</th><th></th></tr></thead>
       <tbody>${e.rows.map(x => `<tr class="${x.state}"><td>${esc(x.label)}</td><td class="num">${esc(x.old ?? "—")}</td>
@@ -428,7 +481,7 @@ function runResult(l, run) {
         <dt>Last matched</dt><dd>${l.last_matched ? `the old way, ${esc(day(l.last_matched))} at ${esc(time(l.last_matched))}` : "never"}</dd>
         <dt>Checked by</dt><dd>${esc(c.by || "no one yet")}${c.on ? `, ${esc(day(c.on))} · best before ${esc(day(l.best_before))}` : ""}</dd>
         <dt>This run</dt><dd>${esc(day(run.run_at))} at ${esc(time(run.run_at))} · <span class="fp">input ${esc(run.receipt.input_fingerprint)}</span></dd>
-        <dt>Receipt</dt><dd>${esc(run.receipt.sentence)}${run.receipt.notes.length ? `<ul class="fp" style="margin:4px 0 0;padding-left:18px">${run.receipt.notes.map(n => `<li>${esc(n)}</li>`).join("")}</ul>` : ""}</dd>
+        <dt>Receipt</dt><dd>${esc(run.receipt.sentence)}${run.receipt.notes.length ? `<ul class="fp" style="margin:4px 0 0;padding-left:18px">${run.receipt.notes.map(n => `<li>${esc(n)}</li>`).join("")}</ul>` : ""}${plateMap(run.receipt.plate)}</dd>
       </dl>
     </div>
     <div class="kicker" style="margin-bottom:8px">Fold change against the average control</div>
@@ -507,7 +560,7 @@ document.addEventListener("click", async ev => {
     const started = Date.now();
     try { const res = await fetch("/api/check", { method: "POST" }); const text = await res.text();
       await new Promise(r => setTimeout(r, Math.max(0, 700 - (Date.now() - started))));
-      state.checking = false; state.raw = ""; take(text);
+      state.checking = false; state.raw = ""; mainApps().forEach(l => state.tick[l.id] = true); take(text);
     } catch (e) { state.checking = false; render(); }
   }
   if (act === "sample") { const text = await (await fetch("/api/sample")).text(); runFile(el.dataset.app, text); }
