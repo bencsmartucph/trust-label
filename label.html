@@ -468,7 +468,7 @@ function reveal(versions) {
     <div class="kicker">${right ? "You caught it" : "Look again"}</div>
     <h2>${right ? `Version ${good.blind} is the one that matches the old way.` : `Version ${bad.blind} is the broken one.`}</h2>
     <p>${esc(bad.sentence)} Both versions say they leave out failed wells. Only one does.</p>
-    <div class="kicker">The whole difference between the two versions</div>
+    <div class="kicker">The whole difference between the two versions · green lines are only in B</div>
     <div class="diff">${diff}</div>
     <p class="note">Nobody had to read this code. The label caught it.</p>
     <button class="btn" data-action="again">Reset the test</button>
