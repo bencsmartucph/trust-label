@@ -7,16 +7,17 @@
 <title>Trust Label</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Libre+Caslon+Text:wght@400;700&family=Source+Sans+3:wght@400;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Urbanist:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
 :root {
   color-scheme: light;
-  --paper: #f5f7f4; --card: #fffffd; --ink: #141c18; --grey: #5d6660; --hair: #d9ded8;
-  --green: #2f7a45; --green-tint: #e6f0e8; --amber: #8a5a00; --amber-tint: #faf0d9;
-  --red: #b23a2e; --blue: #2a6fc4;
-  --serif: "Libre Caslon Text", Georgia, "Times New Roman", serif;
-  --sans: "Source Sans 3", "Segoe UI", system-ui, -apple-system, sans-serif;
-  --mono: "IBM Plex Mono", ui-monospace, Consolas, "Courier New", monospace;
+  /* Toolbox's palette and type, so the label reads as part of the same product */
+  --paper: #f5f6f8; --card: #ffffff; --ink: #1d1f24; --grey: #5b606a; --hair: #e4e6eb;
+  --green: #2f7a45; --green-tint: #e6f0e8; --amber: #8a5300; --amber-tint: #fbeedb;
+  --red: #c43d3d; --blue: #3d74f0;
+  --serif: "Urbanist", "Segoe UI", system-ui, sans-serif;
+  --sans: "Urbanist", "Segoe UI", system-ui, -apple-system, sans-serif;
+  --mono: "JetBrains Mono", ui-monospace, Consolas, "Courier New", monospace;
 }
 * { box-sizing: border-box; }
 html { -webkit-text-size-adjust: 100%; }
@@ -61,7 +62,11 @@ h1.page { font: 700 clamp(30px, 4.4vw, 46px)/1.08 var(--serif); margin: 8px 0 10
 
 /* ---------- label ---------- */
 .layout { display: grid; grid-template-columns: minmax(0, 470px) minmax(0, 1fr); gap: 32px; align-items: start; }
-.label { background: var(--card); border: 2px solid var(--ink); padding: 18px 20px 16px; }
+.label { background: var(--card); border: 2px solid var(--ink); border-radius: 18px; padding: 18px 20px 16px; }
+.panel, .jar, .stamp, .reveal, .drop, .receipt { border-radius: 18px; }
+.btn { border-radius: 999px; }
+.btn.primary { background: var(--blue); border-color: var(--blue); color: #fff; }
+h1.page { font-weight: 300; letter-spacing: -.03em; }
 .label .name { font: 700 clamp(28px, 3.4vw, 36px)/1.05 var(--serif); margin: 8px 0 6px; letter-spacing: -.01em; }
 .label .sub { color: var(--grey); margin: 0; }
 .rule { background: var(--ink); }
@@ -226,7 +231,7 @@ table.sxs { width: 100%; border-collapse: collapse; font-size: 16px; }
 </head>
 <body>
 <header class="top">
-  <a class="mark" href="#/"><i>✓</i>Trust labels</a>
+  <a class="mark" href="#/"><i>✓</i>Toolbox · Trust labels</a>
   <nav>
     <a href="#/" data-nav="shelf">Shelf</a>
     <a href="#/blind" data-nav="blind">Blind test</a>
