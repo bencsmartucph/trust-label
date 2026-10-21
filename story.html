@@ -1,0 +1,332 @@
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 100 100%27><text y=%27.9em%27 font-size=%2790%27>📄</text></svg>">
+<title>Tools You Can Trust</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Urbanist:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: Toolbox's grey canvas; a flowchart rail of eight stops across the top; one stage card below plays each stop's scene, then the 30-day plan. */
+:root {
+  --bg: #f5f6f8; --surface: #ffffff; --ink: #1d1f24; --soft: #5b606a; --faint: #9aa0aa; --line: #e4e6eb;
+  --accent: #3d74f0; --accent-soft: #e3ebfc; --accent-ink: #2a54b8;
+  --ok: #2f7a45; --ok-bg: #e6f0e8; --warn: #8a5300; --warn-bg: #fbeedb; --bad: #b23a2e; --bad-bg: #f8e4e1;
+  --shadow: 0 1px 2px rgba(20, 30, 60, .04), 0 12px 32px -12px rgba(30, 60, 140, .16);
+  --display: "Urbanist", "Segoe UI", system-ui, sans-serif;
+  --mono: "JetBrains Mono", ui-monospace, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #121418; --surface: #1b1e24; --ink: #eceef2; --soft: #a3a9b4; --faint: #646b77; --line: #2a2e36;
+  --accent: #6d98f7; --accent-soft: #22304d; --accent-ink: #a9c3fb;
+  --ok: #7cc79a; --ok-bg: #1d3326; --warn: #f0c27a; --warn-bg: #3a2c16; --bad: #ec8a7a; --bad-bg: #3a1f1c;
+  --shadow: 0 1px 2px rgba(0,0,0,.3), 0 12px 32px -12px rgba(0,0,0,.5); color-scheme: dark; } }
+:root[data-theme="dark"] {
+  --bg: #121418; --surface: #1b1e24; --ink: #eceef2; --soft: #a3a9b4; --faint: #646b77; --line: #2a2e36;
+  --accent: #6d98f7; --accent-soft: #22304d; --accent-ink: #a9c3fb;
+  --ok: #7cc79a; --ok-bg: #1d3326; --warn: #f0c27a; --warn-bg: #3a2c16; --bad: #ec8a7a; --bad-bg: #3a1f1c;
+  --shadow: 0 1px 2px rgba(0,0,0,.3), 0 12px 32px -12px rgba(0,0,0,.5); color-scheme: dark; }
+
+* { box-sizing: border-box; }
+body { background: var(--bg); color: var(--ink); font: 400 17px/1.5 var(--display); margin: 0;
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); padding-block: 20px 32px; }
+.wrap { max-width: 1120px; margin: 0 auto; display: grid; gap: 18px; }
+button { font: inherit; color: inherit; }
+.top { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; }
+.brand { font: 500 12px/1 var(--mono); letter-spacing: .14em; text-transform: uppercase; color: var(--accent-ink); }
+.brand b { color: var(--ink); font-weight: 500; }
+.ctl { display: flex; gap: 8px; align-items: center; }
+.btn { border: 1px solid var(--line); background: var(--surface); border-radius: 999px; padding: 9px 16px; font-weight: 600; font-size: 15px; cursor: pointer; }
+.btn.primary { background: var(--accent); border-color: var(--accent); color: #fff; }
+.btn:focus-visible, .node:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+
+/* the flowchart rail */
+.rail { overflow-x: auto; padding-bottom: 4px; }
+.nodes { display: grid; grid-template-columns: repeat(9, minmax(96px, 1fr)); gap: 0; min-width: 880px; position: relative; }
+.node { position: relative; border: 0; background: none; padding: 0 4px; cursor: pointer; display: grid; justify-items: center; gap: 8px; text-align: center; }
+.node .dot { width: 30px; height: 30px; border-radius: 50%; border: 2px solid var(--line); background: var(--surface); display: grid; place-items: center;
+  font: 500 12px var(--mono); color: var(--faint); transition: all .35s ease; position: relative; z-index: 1; }
+.node::before { content: ""; position: absolute; top: 15px; left: -50%; width: 100%; height: 2px; background: var(--line); }
+.node:first-child::before { display: none; }
+.node::after { content: ""; position: absolute; top: 15px; left: -50%; width: 0; height: 2px; background: var(--accent); transition: width .6s ease; }
+.node:first-child::after { display: none; }
+.node.done::after, .node.on::after { width: 100%; }
+.node.done .dot { background: var(--accent-soft); border-color: var(--accent); color: var(--accent-ink); }
+.node.on .dot { background: var(--accent); border-color: var(--accent); color: #fff; transform: scale(1.18); box-shadow: 0 0 0 6px var(--accent-soft); }
+.node .lb { font-size: 13px; font-weight: 600; color: var(--soft); line-height: 1.2; text-wrap: balance; }
+.node.on .lb { color: var(--ink); }
+.node.warnstop.on .dot { background: var(--warn); border-color: var(--warn); box-shadow: 0 0 0 6px var(--warn-bg); }
+
+/* the stage */
+.stage { background: var(--surface); border: 1px solid var(--line); border-radius: 22px; box-shadow: var(--shadow); padding: clamp(18px, 3.4vw, 40px); min-height: 520px; display: grid; gap: 22px; align-content: start; }
+.kicker { font: 500 12px/1.2 var(--mono); letter-spacing: .14em; text-transform: uppercase; color: var(--accent-ink); }
+.cap { font-weight: 300; font-size: clamp(26px, 3.6vw, 44px); line-height: 1.1; letter-spacing: -.02em; margin: 6px 0 0; text-wrap: balance; max-width: 26ch; }
+.cap b { font-weight: 700; }
+.scene { display: grid; gap: 22px; animation: rise .5s ease both; }
+@keyframes rise { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+.two { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 22px; align-items: center; }
+.pop { animation: pop .5s ease both; }
+@keyframes pop { from { opacity: 0; transform: scale(.94); } to { opacity: 1; transform: none; } }
+.later { opacity: 0; transform: translateY(6px); transition: opacity .45s ease, transform .45s ease; }
+.later.in { opacity: 1; transform: none; }
+.big { font-size: clamp(22px, 2.6vw, 32px); font-weight: 300; line-height: 1.25; margin: 0; }
+.big b { font-weight: 700; }
+.note { color: var(--soft); font-size: 15px; margin: 0; }
+
+/* store card, as in Toolbox */
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: 18px; padding: 18px; display: grid; gap: 10px; box-shadow: var(--shadow); max-width: 420px; }
+.card .row1 { display: flex; justify-content: space-between; align-items: center; gap: 8px; }
+.ico { width: 40px; height: 40px; border-radius: 12px; display: grid; place-items: center; font-weight: 700; color: var(--accent-ink); background: var(--accent-soft); }
+.card h4 { margin: 0; font-size: 19px; font-weight: 600; }
+.card p { margin: 0; font-size: 14px; color: var(--soft); }
+.foot { display: flex; gap: 6px; flex-wrap: wrap; align-items: center; }
+.chip { font-size: 12px; padding: 3px 9px; border-radius: 999px; background: var(--bg); border: 1px solid var(--line); color: var(--soft); }
+.pill { font-size: 12px; font-weight: 600; padding: 4px 10px; border-radius: 999px; transition: all .4s ease; }
+.pill.ok { background: var(--ok-bg); color: var(--ok); } .pill.warn { background: var(--warn-bg); color: var(--warn); } .pill.bad { background: var(--bad-bg); color: var(--bad); }
+.trustline { display: flex; gap: 8px; align-items: flex-start; font-size: 14px; font-weight: 600; color: var(--ok); background: var(--ok-bg); border-radius: 12px; padding: 9px 12px; }
+.dotc { width: 10px; height: 10px; border-radius: 50%; background: currentColor; flex: none; margin-top: 5px; }
+
+/* who presses send */
+.steps { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+.steps li { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 12px; align-items: center; padding: 14px 16px; border: 1px solid var(--line); border-radius: 14px; font-size: 18px; font-weight: 500; }
+.who { font: 500 13px var(--mono); padding: 5px 10px; border-radius: 999px; border: 1.5px solid currentColor; white-space: nowrap; }
+.who.ai { color: var(--accent); } .who.yours { color: var(--bad); } .who.noai { color: var(--soft); }
+
+/* old way */
+.jobs { display: grid; gap: 10px; }
+.job { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 1.4fr) auto; gap: 12px; align-items: center; padding: 14px 16px; border: 1px solid var(--line); border-radius: 14px; }
+.job b { font-weight: 600; }
+.job .vs { font: 400 14px var(--mono); color: var(--soft); }
+.res { font-weight: 700; color: var(--ok); white-space: nowrap; }
+.receipt { border: 1px dashed var(--faint); border-radius: 14px; padding: 12px 16px; font-size: 15px; }
+.receipt code { font: 500 14px var(--mono); }
+
+/* label */
+.label { border: 2px solid var(--ink); border-radius: 18px; padding: 16px 18px; background: var(--surface); display: grid; gap: 0; max-width: 520px; }
+.label .k { font: 500 11px var(--mono); letter-spacing: .14em; text-transform: uppercase; color: var(--soft); }
+.label h4 { margin: 4px 0 10px; font-size: 26px; font-weight: 700; }
+.status { display: grid; grid-template-columns: 14px 1fr; gap: 10px; padding: 12px 14px; border-radius: 12px; background: var(--ok-bg); border-left: 5px solid var(--ok); transition: background .4s ease, border-color .4s ease; margin-bottom: 8px; }
+.status .dotc { color: var(--ok); }
+.status b { display: block; font-size: 19px; }
+.status p { margin: 2px 0 0; font-size: 14px; }
+.status .why { font-weight: 700; color: var(--warn); }
+.status.warn { background: var(--warn-bg); border-left-color: var(--warn); }
+.status.warn .dotc { color: var(--warn); }
+.lrow { display: flex; gap: 10px; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid var(--line); font-size: 15px; }
+.lrow:last-child { border-bottom: 0; }
+.lrow span:last-child { font-weight: 700; text-align: right; }
+.lrow .y { color: var(--ok); } .lrow .n { color: var(--warn); }
+.code { font: 500 clamp(18px, 2.2vw, 26px)/1.4 var(--mono); background: var(--bg); border: 1px solid var(--line); border-radius: 14px; padding: 18px 20px; margin: 0; overflow-x: auto; }
+.code .num { padding: 0 4px; border-radius: 6px; transition: background .3s ease, color .3s ease; }
+.code .num.hot { background: var(--warn-bg); color: var(--warn); }
+.bars { display: flex; gap: 4px; margin-top: 6px; }
+.bars i { width: 9px; height: 18px; border-radius: 2px; background: var(--ok); }
+.bars i.a { background: var(--warn); }
+
+/* two strikes */
+.reports { display: grid; gap: 10px; }
+.report { padding: 12px 14px; border-radius: 14px; background: var(--bg); border: 1px solid var(--line); font-size: 15px; }
+.report b { display: block; font-size: 13px; color: var(--soft); font-weight: 600; }
+
+/* best before */
+.meter { height: 16px; border-radius: 999px; background: var(--line); overflow: hidden; }
+.meter i { display: block; height: 100%; width: 100%; background: var(--accent); border-radius: 999px; transition: width 5s linear; }
+.days { font: 500 clamp(40px, 6vw, 72px)/1 var(--mono); letter-spacing: -.02em; }
+
+/* close and plan */
+.closing { font-size: clamp(32px, 5vw, 62px); font-weight: 300; line-height: 1.1; letter-spacing: -.03em; margin: 0; text-wrap: balance; }
+.closing b { font-weight: 700; }
+.plan { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
+.box { border: 1px solid var(--line); border-radius: 16px; padding: 18px; display: grid; gap: 8px; align-content: start; background: var(--surface); }
+.box h3 { margin: 0; font-size: 20px; font-weight: 700; }
+.box p, .box li { margin: 0; font-size: 15.5px; color: var(--soft); }
+.box ul { margin: 0; padding-left: 18px; display: grid; gap: 6px; }
+.box strong { color: var(--ink); }
+.success { border-radius: 16px; padding: 16px 18px; background: var(--accent-soft); color: var(--ink); font-size: 16px; }
+
+@media (max-width: 760px) {
+  .two, .plan { grid-template-columns: 1fr; }
+  .job { grid-template-columns: 1fr auto; }
+  .job .vs { grid-column: 1 / -1; }
+  .stage { min-height: 0; }
+}
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; } }
+</style>
+
+<div class="wrap">
+  <div class="top">
+    <div class="brand"><b>Toolbox</b> · how you can trust what's in the store</div>
+    <div class="ctl">
+      <button class="btn" id="prev" aria-label="Previous step">&#8592;</button>
+      <button class="btn primary" id="play">&#10073;&#10073; Pause</button>
+      <button class="btn" id="next" aria-label="Next step">&#8594;</button>
+    </div>
+  </div>
+  <div class="rail"><div class="nodes" id="nodes"></div></div>
+  <section class="stage" id="stage" aria-live="polite"></section>
+</div>
+
+<script>
+const $ = (s, r = document) => r.querySelector(s);
+const STOPS = [
+  { id: "share", label: "Shared in the store", dur: 7000 },
+  { id: "send", label: "Who presses send", dur: 8500 },
+  { id: "old", label: "Checked against the old way", dur: 9500 },
+  { id: "label", label: "Trust label", dur: 8000 },
+  { id: "change", label: "One number changes", dur: 11000, warn: true },
+  { id: "strikes", label: "Two strikes", dur: 8500, warn: true },
+  { id: "expiry", label: "Best before", dur: 8500 },
+  { id: "store", label: "Trusted in the store", dur: 8000 },
+  { id: "plan", label: "The next 30 days", dur: 0 },
+];
+
+const greenStatus = `<span class="dotc"></span><div><b>Matches the old way</b><p>Identical on 3 of 3 past plates, and it reproduces the known answer exactly.</p></div>`;
+const amberStatus = `<span class="dotc"></span><div><b>Differs from the old way</b><p>Differs on Plate 2: 6 of 18 results changed.</p><p class="why">Since Anders checked it: the failed-well cut-off went from 35 to 40.</p></div>`;
+const storeCard = (pill, extra = "") => `
+  <div class="card pop">
+    <div class="row1"><span class="ico">q</span>${pill}</div>
+    <h4>qPCR fold change</h4>
+    <p>Fold change from a plate of Ct values, the same way the lab's Excel template does it.</p>
+    ${extra}
+    <div class="foot"><span class="chip">Internal</span><span class="chip">Calculators</span><span class="chip">v1</span><span class="chip">by Sofie Lund</span></div>
+  </div>`;
+
+const SCENES = {
+  share: () => `
+    <div><div class="kicker">The App Store</div><h2 class="cap">Anyone can describe a tool and <b>publish it to the store.</b></h2></div>
+    <div class="two">${storeCard('<span class="pill warn">Awaiting approval</span>')}
+      <p class="big later" data-at="2200">Would you trust a colleague's app <b>with your results?</b></p></div>`,
+  send: () => `
+    <div><div class="kicker">Who presses send</div><h2 class="cap">Before it's shared, <b>every step says who does it.</b></h2></div>
+    <ul class="steps">
+      <li class="later" data-at="700"><span>Write the script from the lab's Excel template</span><span class="who ai">AI drafts, a person checks</span></li>
+      <li class="later" data-at="1900"><span>Decide what counts as a failed well</span><span class="who yours">Yours</span></li>
+      <li class="later" data-at="3100"><span>Leave out failed wells, average the repeats</span><span class="who noai">No AI needed</span></li>
+      <li class="later" data-at="4300"><span>Run it on new data</span><span class="who noai">No AI needed: plain code</span></li>
+    </ul>`,
+  old: () => `
+    <div><div class="kicker">Your old work is the answer key</div><h2 class="cap">It re-runs on past jobs and <b>compares with what the old way gave.</b></h2></div>
+    <div class="jobs">
+      <div class="job later" data-at="700"><b>Plate 1 · 14 Aug</b><span class="vs">Excel template vs this app</span><span class="res">18 of 18 identical ✓</span></div>
+      <div class="job later" data-at="1700"><b>Plate 2 · 3 Sep</b><span class="vs">Excel template vs this app</span><span class="res">18 of 18 identical ✓</span></div>
+      <div class="job later" data-at="2700"><b>Plate 3 · 22 Sep</b><span class="vs">Excel template vs this app</span><span class="res">18 of 18 identical ✓</span></div>
+      <div class="job later" data-at="3700"><b>Known answer</b><span class="vs">built to give 4, 2 and ½</span><span class="res">exact ✓</span></div>
+    </div>
+    <div class="receipt later" data-at="5000"><b>Receipt, counted by code:</b> read all 72 wells, used 71, left out <code>B12</code> (Ct 35.84, at or above 35).</div>`,
+  label: () => `
+    <div><div class="kicker">The trust label</div><h2 class="cap">The evidence <b>travels with the app.</b></h2></div>
+    <div class="two">
+      <div class="label pop">
+        <span class="k">Trust label</span><h4>qPCR fold change</h4>
+        <div class="status">${greenStatus}</div>
+        <div class="lrow later" data-at="900"><span>Old way, 3 past plates</span><span class="y">identical ✓</span></div>
+        <div class="lrow later" data-at="1500"><span>Known answer</span><span class="y">exact ✓</span></div>
+        <div class="lrow later" data-at="2100"><span>Runs as</span><span class="y">plain code, no AI ✓</span></div>
+        <div class="lrow later" data-at="2700"><span>Checked by</span><span>Dr Anders Kjær, not the author</span></div>
+        <div class="lrow later" data-at="3300"><span>Best before</span><span>13 Nov 2026</span></div>
+      </div>
+      <p class="big later" data-at="4200">Ticks are <b>checked by code on every run.</b> Everything else is what people say, and the label says so.</p>
+    </div>`,
+  change: () => `
+    <div><div class="kicker">One number changes</div><h2 class="cap">Change one setting and <b>the label says what broke, and why.</b></h2></div>
+    <div class="two">
+      <pre class="code">{ "failed_well_ct": <span class="num" id="num">35</span> }</pre>
+      <div class="label">
+        <span class="k">Trust label</span><h4>qPCR fold change</h4>
+        <div class="status" id="st">${greenStatus}</div>
+        <div class="lrow"><span>Track record</span><span id="tr">all checks matched</span></div>
+        <div class="bars" id="bars"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      </div>
+    </div>`,
+  strikes: () => `
+    <div><div class="kicker">Two strikes</div><h2 class="cap">Two different people, same problem: <b>the app pauses.</b></h2></div>
+    <div class="two">
+      <div id="sc">${storeCard('<span class="pill ok" id="sp">Approved</span>')}</div>
+      <div class="reports">
+        <div class="report later" data-at="1300"><b>Report from a colleague in immunology</b>Fold changes on my plate look about twice too high.</div>
+        <div class="report later" data-at="3000"><b>Report from a colleague in cell biology</b>Same here, my IL6 numbers jumped after the update.</div>
+        <p class="note later" data-at="4400">Paused until its owner fixes it. Nobody is named for a mistake, only for catching one.</p>
+      </div>
+    </div>`,
+  expiry: () => `
+    <div><div class="kicker">Best before</div><h2 class="cap">Every label has a best-before date. <b>Half of my own AI instructions were gone within a month.</b></h2></div>
+    <div class="two">
+      <div style="display:grid;gap:12px"><div class="days"><span id="days">30</span> days</div><div class="meter"><i id="meter"></i></div>
+        <p class="note">Median life of my own AI instructions: 30 days, measured on 4,978 lines across five projects.</p></div>
+      <p class="big later" data-at="5600">At zero it's <b>due for a re-check:</b> a person looks again before it's trusted again.</p>
+    </div>`,
+  store: () => `
+    <div><div class="kicker">Back in the store</div><h2 class="cap">Now you can see <b>whether to trust it.</b></h2></div>
+    <div class="two">
+      ${storeCard('<span class="pill ok">Approved</span>', '<div class="trustline"><span class="dotc"></span><span>Checked by Anders · matches the old way on 3 past plates · best before 13 Nov</span></div>')}
+      <p class="big later" data-at="1600">Governance says who reviewed the code. <b>The trust label says whether the answers are right.</b></p>
+    </div>
+    <p class="closing later" data-at="4200">Sharing is easy. Trust is the bottleneck. <b>Your old work is the answer key.</b></p>`,
+  plan: () => `
+    <div><div class="kicker">30-day impact plan</div><h2 class="cap">From tomorrow, <b>I take it forward.</b></h2></div>
+    <div class="plan">
+      <div class="box later" data-at="300"><div class="kicker">Owner</div><h3>Ben</h3><p>CEBI, University of Copenhagen. I built the reporting pipeline the economists there learned to trust by checking it against the legacy system.</p></div>
+      <div class="box later" data-at="900"><div class="kicker">First real-world test</div><h3>Two CEBI researchers</h3>
+        <ul><li><strong>Who:</strong> one shelves a difference-in-differences package with the legacy outputs as its answer key; a colleague who didn't write it runs it.</li>
+        <li><strong>What I want to learn:</strong> does someone trust the result, or catch a broken version, from the label alone? Which line do they read first?</li></ul></div>
+      <div class="box later" data-at="1500"><div class="kicker">Support I need</div><h3>Three things</h3>
+        <ul><li>Two researchers, 30 minutes each, and one past report they trust.</li>
+        <li>The Toolbox team showing the label on store cards.</li>
+        <li>A named checker in each field, willing to sign.</li></ul></div>
+    </div>
+    <div class="success later" data-at="2200"><strong>30 days of success, by 20 November:</strong> one package checked against the old way and run by someone who didn't write it; every amber explained in one sentence; a second team asking to shelve a pipeline.</div>`,
+};
+
+// timed effects inside scenes
+const EFFECTS = {
+  change: (after) => {
+    after(1800, () => { const n = $("#num"); n.textContent = "40"; n.classList.add("hot"); });
+    after(3000, () => { const s = $("#st"); s.classList.add("warn"); s.innerHTML = amberStatus; $("#tr").textContent = "1 check differed"; $("#bars").insertAdjacentHTML("beforeend", '<i class="a"></i>'); });
+    after(7600, () => { const n = $("#num"); n.textContent = "35"; n.classList.remove("hot"); const s = $("#st"); s.classList.remove("warn"); s.innerHTML = greenStatus; $("#tr").textContent = "kept the amber"; $("#bars").insertAdjacentHTML("beforeend", "<i></i>"); });
+  },
+  strikes: (after) => { after(4400, () => { const p = $("#sp"); p.className = "pill bad"; p.textContent = "Paused"; }); },
+  expiry: (after) => {
+    after(300, () => { $("#meter").style.width = "0%"; });
+    for (let i = 1; i <= 30; i++) after(300 + i * 165, () => { const d = $("#days"); if (d) d.textContent = String(30 - i); });
+  },
+};
+
+let idx = 0, playing = true, timers = [];
+const clear = () => { timers.forEach(clearTimeout); timers = []; };
+const after = (ms, fn) => timers.push(setTimeout(fn, ms));
+
+function drawNodes() {
+  $("#nodes").innerHTML = STOPS.map((s, i) => `<button class="node ${i < idx ? "done" : ""} ${i === idx ? "on" : ""} ${s.warn ? "warnstop" : ""}" data-i="${i}" aria-label="${s.label}"><span class="dot">${i < idx ? "✓" : i + 1}</span><span class="lb">${s.label}</span></button>`).join("");
+}
+
+function show(i) {
+  clear();
+  idx = Math.max(0, Math.min(STOPS.length - 1, i));
+  drawNodes();
+  const stop = STOPS[idx];
+  const stage = $("#stage");
+  stage.innerHTML = `<div class="scene">${SCENES[stop.id]()}</div>`;
+  stage.querySelectorAll(".later").forEach((el) => after(+el.dataset.at || 0, () => el.classList.add("in")));
+  if (EFFECTS[stop.id]) EFFECTS[stop.id](after);
+  if (playing && stop.dur) after(stop.dur, () => show(idx + 1));
+  if (!stop.dur) setPlaying(false);
+}
+
+function setPlaying(on) {
+  playing = on;
+  $("#play").innerHTML = on ? "&#10073;&#10073; Pause" : "&#9654; Play";
+}
+
+$("#play").addEventListener("click", () => {
+  if (playing) { setPlaying(false); clear(); return; }
+  setPlaying(true);
+  show(idx === STOPS.length - 1 ? 0 : idx);
+});
+$("#next").addEventListener("click", () => show(idx + 1));
+$("#prev").addEventListener("click", () => show(idx - 1));
+$("#nodes").addEventListener("click", (e) => { const n = e.target.closest(".node"); if (n) show(+n.dataset.i); });
+document.addEventListener("keydown", (e) => {
+  if (e.key === "ArrowRight") show(idx + 1);
+  else if (e.key === "ArrowLeft") show(idx - 1);
+  else if (e.key === " ") { e.preventDefault(); $("#play").click(); }
+});
+show(0);
+</script>

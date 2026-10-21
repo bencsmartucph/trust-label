@@ -1,0 +1,330 @@
+{
+ "id": "did-cebi",
+ "name": "Difference-in-differences",
+ "subtitle": "2×2 estimate on a two-period panel",
+ "version": "1.0",
+ "made_by": {
+  "name": "Jonas Holm",
+  "role": "Labour economics, CEBI"
+ },
+ "what_it_does": [
+  "Leaves out units not seen both before and after, so every unit counts in both periods.",
+  "Averages the outcome for treated and control units, before and after.",
+  "Takes the change for treated units minus the change for control units.",
+  "Reports each average and the estimate to 3 decimals: 2.000 means treated units gained 2 more than controls."
+ ],
+ "how_it_was_made": [
+  {
+   "step": "Writing the script",
+   "who": "AI drafted, a person checked",
+   "check": "Jonas read each step against did_report.do"
+  },
+  {
+   "step": "Checking the results",
+   "who": "A person",
+   "check": "Mette compared it with three past reports"
+  },
+  {
+   "step": "Running it",
+   "who": "No AI needed",
+   "check": "plain code, the same every time"
+  }
+ ],
+ "old_way": "the legacy Stata do-file (did_report.do)",
+ "settings": {
+  "balanced_panel": true
+ },
+ "blind": null,
+ "job_noun": "reports",
+ "input_columns": [
+  "unit",
+  "group",
+  "period",
+  "outcome"
+ ],
+ "best_before_days": 30,
+ "status": "verified",
+ "headline": "Matches the old way",
+ "sentence": "Identical on 3 of 3 past reports, and it reproduces the known answer exactly.",
+ "since": null,
+ "matched_all": true,
+ "summary": "Matches the old way on 3 of 3 past reports",
+ "past_jobs": 3,
+ "past_matched": 3,
+ "known_answer": "identical",
+ "fingerprint": "80a4560dac2e",
+ "signed": true,
+ "checked": {
+  "by": "Dr Mette Lindholm",
+  "role": "CEBI, University of Copenhagen",
+  "on": "2026-10-14",
+  "skill_fingerprint": "80a4560dac2e"
+ },
+ "checker_is_author": false,
+ "best_before": "2026-11-13",
+ "days_left": 23,
+ "plain_code": {
+  "ok": true,
+  "imports": [],
+  "sentence": "Plain Python 3.12, with nothing added. No AI, no internet, no add-ons."
+ },
+ "runtime": "Python 3.12",
+ "reports": [],
+ "last_run": "2026-10-21T19:41:01",
+ "last_matched": "2026-10-21T19:41:01",
+ "evidence": [
+  {
+   "title": "Report 1",
+   "date": "2026-08-12",
+   "kind": "old_way",
+   "source": "Results from the legacy Stata do-file, saved at the time",
+   "id": "report-1",
+   "against": "the old way",
+   "input_fingerprint": "3fb6ee6c81ad",
+   "expected_fingerprint": "821313974247",
+   "rows": [
+    {
+     "label": "Treated, before",
+     "state": "same",
+     "differs_in": [],
+     "old": "28.843",
+     "new": "28.843"
+    },
+    {
+     "label": "Treated, after",
+     "state": "same",
+     "differs_in": [],
+     "old": "31.127",
+     "new": "31.127"
+    },
+    {
+     "label": "Control, before",
+     "state": "same",
+     "differs_in": [],
+     "old": "26.903",
+     "new": "26.903"
+    },
+    {
+     "label": "Control, after",
+     "state": "same",
+     "differs_in": [],
+     "old": "28.010",
+     "new": "28.010"
+    },
+    {
+     "label": "Difference-in-differences",
+     "state": "same",
+     "differs_in": [],
+     "old": "1.177",
+     "new": "1.177"
+    }
+   ],
+   "sentence": "Identical: all 5 results match the old way.",
+   "result": "identical",
+   "receipt": {
+    "read": 60,
+    "used": 60,
+    "left_out": 0,
+    "notes": [],
+    "results": 5,
+    "input_fingerprint": "3fb6ee6c81ad",
+    "sentence": "Read all 60 rows in the file. Used 60, left out 0.",
+    "plate": []
+   }
+  },
+  {
+   "title": "Report 2",
+   "date": "2026-09-02",
+   "kind": "old_way",
+   "source": "Results from the legacy Stata do-file, saved at the time",
+   "id": "report-2",
+   "against": "the old way",
+   "input_fingerprint": "fe60abd5add8",
+   "expected_fingerprint": "4c6403fd898f",
+   "rows": [
+    {
+     "label": "Treated, before",
+     "state": "same",
+     "differs_in": [],
+     "old": "28.844",
+     "new": "28.844"
+    },
+    {
+     "label": "Treated, after",
+     "state": "same",
+     "differs_in": [],
+     "old": "30.926",
+     "new": "30.926"
+    },
+    {
+     "label": "Control, before",
+     "state": "same",
+     "differs_in": [],
+     "old": "27.349",
+     "new": "27.349"
+    },
+    {
+     "label": "Control, after",
+     "state": "same",
+     "differs_in": [],
+     "old": "28.499",
+     "new": "28.499"
+    },
+    {
+     "label": "Difference-in-differences",
+     "state": "same",
+     "differs_in": [],
+     "old": "0.932",
+     "new": "0.932"
+    }
+   ],
+   "sentence": "Identical: all 5 results match the old way.",
+   "result": "identical",
+   "receipt": {
+    "read": 58,
+    "used": 56,
+    "left_out": 2,
+    "notes": [
+     "Left out unit 8: no pre-period observation.",
+     "Left out unit 17: no post-period observation."
+    ],
+    "results": 5,
+    "input_fingerprint": "fe60abd5add8",
+    "sentence": "Read all 58 rows in the file. Used 56, left out 2.",
+    "plate": []
+   }
+  },
+  {
+   "title": "Report 3",
+   "date": "2026-09-24",
+   "kind": "old_way",
+   "source": "Results from the legacy Stata do-file, saved at the time",
+   "id": "report-3",
+   "against": "the old way",
+   "input_fingerprint": "30018fbf1282",
+   "expected_fingerprint": "afc13c18d0c9",
+   "rows": [
+    {
+     "label": "Treated, before",
+     "state": "same",
+     "differs_in": [],
+     "old": "27.827",
+     "new": "27.827"
+    },
+    {
+     "label": "Treated, after",
+     "state": "same",
+     "differs_in": [],
+     "old": "30.370",
+     "new": "30.370"
+    },
+    {
+     "label": "Control, before",
+     "state": "same",
+     "differs_in": [],
+     "old": "27.884",
+     "new": "27.884"
+    },
+    {
+     "label": "Control, after",
+     "state": "same",
+     "differs_in": [],
+     "old": "28.547",
+     "new": "28.547"
+    },
+    {
+     "label": "Difference-in-differences",
+     "state": "same",
+     "differs_in": [],
+     "old": "1.880",
+     "new": "1.880"
+    }
+   ],
+   "sentence": "Identical: all 5 results match the old way.",
+   "result": "identical",
+   "receipt": {
+    "read": 60,
+    "used": 60,
+    "left_out": 0,
+    "notes": [],
+    "results": 5,
+    "input_fingerprint": "30018fbf1282",
+    "sentence": "Read all 60 rows in the file. Used 60, left out 0.",
+    "plate": []
+   }
+  },
+  {
+   "title": "Known-answer panel",
+   "date": "2026-10-14",
+   "kind": "known_answer",
+   "source": "Built so the right answer is exactly 2.000",
+   "short": "exactly 2.000",
+   "id": "known-answer",
+   "against": "the known answer",
+   "input_fingerprint": "1570c52c69a7",
+   "expected_fingerprint": "9368e6981e4c",
+   "rows": [
+    {
+     "label": "Treated, before",
+     "state": "same",
+     "differs_in": [],
+     "old": "11.000",
+     "new": "11.000"
+    },
+    {
+     "label": "Treated, after",
+     "state": "same",
+     "differs_in": [],
+     "old": "15.000",
+     "new": "15.000"
+    },
+    {
+     "label": "Control, before",
+     "state": "same",
+     "differs_in": [],
+     "old": "11.000",
+     "new": "11.000"
+    },
+    {
+     "label": "Control, after",
+     "state": "same",
+     "differs_in": [],
+     "old": "13.000",
+     "new": "13.000"
+    },
+    {
+     "label": "Difference-in-differences",
+     "state": "same",
+     "differs_in": [],
+     "old": "2.000",
+     "new": "2.000"
+    }
+   ],
+   "sentence": "Identical: all 5 results match the known answer.",
+   "result": "identical",
+   "receipt": {
+    "read": 13,
+    "used": 12,
+    "left_out": 1,
+    "notes": [
+     "Left out unit 7: no post-period observation."
+    ],
+    "results": 5,
+    "input_fingerprint": "1570c52c69a7",
+    "sentence": "Read all 13 rows in the file. Used 12, left out 1.",
+    "plate": []
+   }
+  }
+ ],
+ "track_record": {
+  "checks": 3,
+  "matched": 3,
+  "since": "2026-10-21T19:37:10",
+  "last_differed": null,
+  "recent": [
+   true,
+   true,
+   true
+  ]
+ }
+}

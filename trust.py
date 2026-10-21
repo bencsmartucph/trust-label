@@ -223,7 +223,8 @@ def changes_since_check(skill: dict) -> str | None:
     before = signed_env.get("settings") or {}
     for k in [k for k in before if k in skill["settings"]] + [k for k in skill["settings"] if k not in before]:
         if before.get(k) != skill["settings"].get(k):
-            changes.append(f"{names.get(k, k)} went from {before.get(k, 'unset')} to {skill['settings'].get(k)}")
+            plain = lambda v: ("on" if v else "off") if isinstance(v, bool) else v
+            changes.append(f"{names.get(k, k)} went from {plain(before.get(k, 'unset'))} to {plain(skill['settings'].get(k))}")
     signed_code = skill["folder"] / "signed.py"
     if signed_code.exists():
         diff = list(difflib.ndiff(read_text(signed_code).splitlines(), skill["code"].splitlines()))

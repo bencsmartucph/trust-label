@@ -1,0 +1,6 @@
+term,value
+"Treated, before",28.843
+"Treated, after",31.127
+"Control, before",26.903
+"Control, after",28.010
+Difference-in-differences,1.177

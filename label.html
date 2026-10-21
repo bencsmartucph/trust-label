@@ -334,7 +334,7 @@ function evidenceRow(l, e, compact, i) {
   const good = e.result === "identical";
   const known = e.kind === "known_answer";
   const what = known ? "Known answer" : "Old way";
-  const detail = known ? "4, 2 and ½" : `${e.title}, ${dayShort(e.date)}`;
+  const detail = known ? (e.short || "4, 2 and ½") : `${e.title}, ${dayShort(e.date)}`;
   const value = good ? (known ? "exact ✓" : "identical ✓") : "differs ≠";
   const sel = state.job[l.id] === e.id ? " sel" : "";
   const tick = state.tick[l.id] ? ` tick" style="--i:${i}` : "";
