@@ -272,9 +272,15 @@ class Shelf:
                     skill = load_skill(folder)
                     key = inputs_key(skill)
                 except Exception as exc:
-                    out.append({"id": folder.name, "name": folder.name, "status": "differs",
-                                "headline": "Can't be read", "sentence": f"{type(exc).__name__}: {exc}",
-                                "evidence": [], "broken_file": True})
+                    # e.g. skill.json saved half-edited: show amber, never a blank page
+                    out.append({"id": folder.name, "name": folder.name, "subtitle": "", "version": "",
+                                "status": "differs", "headline": "Can't be read",
+                                "sentence": f"{type(exc).__name__}: {exc}", "summary": "Can't be read",
+                                "made_by": {"name": "—", "role": ""}, "checked": {}, "signed": False,
+                                "fingerprint": "", "best_before": None, "days_left": None,
+                                "plain_code": {"ok": False, "imports": [], "sentence": "Not checked."},
+                                "what_it_does": [], "how_it_was_made": [], "reports": [],
+                                "input_columns": [], "evidence": [], "broken_file": True})
                     continue
                 cached = self.cache.get(skill["id"])
                 if force or not cached or cached[0] != key:
