@@ -76,7 +76,7 @@ On screen the stamp reads `TRUST STAMP · MATCHES THE OLD WAY` (amber: `NOT VERI
 - New last row in CHECKED BY CODE: `Track record ........ 4 checks · 3 matched`, a strip of small green and amber bars (one per check), then `Logged since 21 Oct, 18:54. Last differed 21 Oct, 18:54: the failed-well cut-off went from 35 to 40.` (or `It has matched every time.`). The numbers are real and grow with every check, rehearsals included.
 - After "Run the check again" or a status change, the evidence rows tick in one by one, about 170 ms apart.
 
-## The room (19:10, with `--lan`)
+## The room (NOT IN THE DEMO: cut for the five-minute slot; don't show it in the showcase)
 
 - Header button `On your phone` opens a full-screen QR code: `Same wifi as this laptop` / `Open the label on your phone` / the address.
 - Blind test tally box `THE ROOM`: before you pick, `17 people have picked so far. Pick to see the room's answer.`; after you pick, two bars `Version A` and `Version B` with counts, the right one in green.
