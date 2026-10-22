@@ -48,7 +48,7 @@ Open http://127.0.0.1:8765. To see the amber moment, open `skills\qpcr-ddct\skil
 | **This version** | A code fingerprint, and whether it's the exact version the checker signed | nf-core versioned releases; pinned environments |
 | **Runs as** | Read from the code itself: plain code, no AI, no internet when it runs | Pinned environments |
 | **Checked by** | A named person in your field who is not the author | SR 11-7 independent validation and effective challenge |
-| **Best before** | The check date plus 30 days, then a person looks again | Half-Life: the median life of an AI instruction is about 30 days |
+| **Best before** | The check date plus 30 days, then a person looks again | Half-Life: the median life of the instructions in my own AI setup was 30 days (4,978 lines, five projects) |
 | **Stated by the author** | What it does in plain steps, and who did each step: AI drafted, a person, or no AI. Marked "not checked" | Who presses send |
 | **Problems reported** | Two different people reporting the same problem pauses the tool | Two Strikes |
 
@@ -68,7 +68,6 @@ Every result also carries a **stamp** (version, fingerprint, when it last matche
 - `story.html`: a self-playing walkthrough, from a tool being shared to its label going amber and back.
 - `demo-data/`: builds the demo evidence.
 - `DEMO.md`, `WORDING.md`: the original two-minute demo script and the frozen label wording.
-- `INVENTORY.md`: where every related piece lives (prototypes, decks, the earlier research).
 
 ## Plugging it into a platform
 
@@ -86,4 +85,4 @@ python trust.py sign qpcr-ddct "Dr Anders Kjær" "qPCR core facility"
 
 ## Origin
 
-Built by Ben Smart at the Claude Impact Lab, CodeNode Copenhagen, 21 October 2026, as the trust layer for a team building an internal app store for AI-made tools.
+Built by Ben Smart with Claude Code at the Claude Impact Lab, CodeNode Copenhagen, 21 October 2026, as the trust layer for a team building an internal app store for AI-made tools.

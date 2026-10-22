@@ -5,7 +5,7 @@
   "version": "1.0",
   "made_by": {
     "name": "Jonas Holm",
-    "role": "Labour economics, CEBI"
+    "role": "Labour economics, research institute (demo)"
   },
   "what_it_does": [
     "Leaves out units not seen both before and after, so every unit counts in both periods.",
@@ -53,7 +53,7 @@
   "best_before_days": 30,
   "checked": {
     "by": "Dr Mette Lindholm",
-    "role": "CEBI, University of Copenhagen",
+    "role": "Research institute (demo)",
     "on": "2026-10-14",
     "skill_fingerprint": "80a4560dac2e"
   },

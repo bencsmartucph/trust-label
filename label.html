@@ -122,6 +122,8 @@ button.row:hover .k, button.row.sel .k { text-decoration: underline; text-underl
 .label ol li { margin: 3px 0; }
 .made { display: grid; grid-template-columns: auto 1fr; gap: 6px 10px; margin-top: 10px; font-size: 15px; align-items: baseline; }
 .chip { font: 600 11px/1 var(--mono); letter-spacing: .04em; padding: 4px 7px; border: 1.5px solid currentColor; white-space: nowrap; }
+.brandrow { display: flex; align-items: center; gap: 12px; }
+.chip.demo { color: var(--amber); }
 .chip.yours { color: var(--red); } .chip.drafts { color: var(--blue); } .chip.noai { color: var(--grey); }
 .made b { display: block; }
 .label footer { padding-top: 12px; }
@@ -231,7 +233,7 @@ table.sxs { width: 100%; border-collapse: collapse; font-size: 16px; }
 </head>
 <body>
 <header class="top">
-  <a class="mark" href="#/"><i>✓</i>Trust labels</a>
+  <div class="brandrow"><a class="mark" href="#/"><i>✓</i>Trust labels</a><span class="chip demo" title="The people, plates and old-way results are made up for the demo. The checks themselves are real code.">Demo data</span></div>
   <nav>
     <a href="#/" data-nav="shelf">Shelf</a>
     <a href="#/blind" data-nav="blind">Blind test</a>
@@ -460,7 +462,7 @@ function evidencePanel(l) {
     <h2>${e.kind === "known_answer" ? "The known answer and this app, side by side" : `The old way and this app, side by side`}</h2>
     <div class="tabs">${tabs}</div>
     <p class="verdict ${good ? "ok-t" : "warn-t"}">${esc(e.sentence)}</p>
-    <p class="source">${esc(e.title)} · ${esc(day(e.date))}. ${esc(e.source)}${e.kind === "old_way" ? `: ${esc(l.old_way)}` : ""}.</p>
+    <p class="source">${esc(e.title)} · ${esc(day(e.date))}. ${esc(e.source)}${e.kind === "old_way" ? ` ${esc(l.old_way)}` : ""}.</p>
     ${r ? `<div class="receipt"><div class="kicker">Receipt: what it actually read</div>${esc(r.sentence)}
       ${r.notes.length ? `<ul>${r.notes.map(n => `<li>${esc(n)}</li>`).join("")}</ul>` : ""}${plateMap(r.plate)}</div>` : ""}
     ${e.rows.length ? `<div class="scroll"><table class="sxs">

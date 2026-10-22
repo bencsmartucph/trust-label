@@ -115,7 +115,7 @@ def write_job(folder, job, rows, expected):
 
 if __name__ == "__main__":
     c, t = ["C1", "C2", "C3"], ["T1", "T2", "T3"]
-    source = "Results from the lab's Excel template, saved at the time"
+    source = "Demo data: old-way results from a stand-in that copies"
     for folder, date, title, seed, overrides in [
         ("plate-1", "2026-08-14", "Plate 1", 11, ()),
         ("plate-2", "2026-09-03", "Plate 2", 12, [(("IL6", "C2", 3), "35.84")]),

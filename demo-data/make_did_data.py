@@ -93,7 +93,7 @@ def write_job(folder, job, rows, expected):
 
 
 if __name__ == "__main__":
-    source = "Results from the legacy Stata do-file, saved at the time"
+    source = "Demo data: old-way results from a stand-in that copies"
     for folder, date, title, seed, drop in [
         ("report-1", "2026-08-12", "Report 1", 21, ()),
         # Report 2: unit 17 left the sample before the follow-up, unit 8 joined late.

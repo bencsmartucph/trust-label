@@ -111,7 +111,7 @@ PLAYER = """<style>a[download] { display: none !important; }</style>
     [37500, () => { go("#/blind"); waiting = true; say("Your turn. Two versions of the same app, one broken. No biology needed: read the labels and tap the one you'd run."); }],
   ];
   const part2 = [
-    [0, () => { setTimeout(() => { const r = document.querySelector(".reveal"); if (r) r.scrollIntoView({ block: "start" }); }, 500); say("The whole difference is two lines of code. Nobody read the code; the label caught it."); }],
+    [0, () => { setTimeout(() => { const r = document.querySelector(".reveal"); if (r) r.scrollIntoView({ block: "start" }); }, 500); say("The whole difference is three lines of code. Nobody read the code; the label caught it."); }],
     [7000, () => { say("Who presses send: the label says AI drafted the script, a person checked every step, and no AI runs it."); }],
     [13000, () => { say("Two strikes: if two different people report the same problem, the app pauses until its owner fixes it."); }],
     [19000, () => { say("Sharing is easy. Trust is the bottleneck. Your old work is the answer key."); }],
