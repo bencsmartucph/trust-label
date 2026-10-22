@@ -15,6 +15,10 @@ Change one setting and the label turns amber within seconds and says why:
 > **Differs from the old way.** Differs on Plate 2: 6 of 18 results changed.
 > Since Anders checked it: the failed-well cut-off went from 35 to 40.
 
+![The label going amber when the failed-well cut-off changes from 35 to 40, then green again when it changes back](docs/amber.gif)
+
+*`standalone.html` replaying the checker's real results. Names and plates are demo data.*
+
 ## Where it fits
 
 - **Research groups and labs:** shared analysis pipelines, where a wrong number is expensive and hard to spot.
