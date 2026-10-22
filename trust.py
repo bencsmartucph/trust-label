@@ -1,9 +1,9 @@
 """Trust labels for shared apps: evidence a non-author can inspect, checked by code.
 
-    python trust/trust.py check                       re-run every app on its saved evidence, write label.json
-    python trust/trust.py serve [--port 8765] [--lan] the same, plus the label page at http://127.0.0.1:8765;
+    python trust.py check                       re-run every app on its saved evidence, write label.json
+    python trust.py serve [--port 8765] [--lan] the same, plus the label page at http://127.0.0.1:8765;
                                                       --lan lets phones on the same wifi follow along and vote
-    python trust/trust.py sign APP "Name" "Role" [--on YYYY-MM-DD]
+    python trust.py sign APP "Name" "Role" [--on YYYY-MM-DD]
                                                       record who checked this exact version of the code
 
 Standard library only. No AI runs here: every check is plain code.

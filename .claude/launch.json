@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "trust",
+      "runtimeExecutable": "python",
+      "runtimeArgs": ["trust.py", "serve"],
+      "port": 8765
+    }
+  ]
+}

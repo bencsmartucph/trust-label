@@ -10,7 +10,7 @@ Nothing on screen is a recording. The checker runs on the laptop while you talk,
 
 **Not in the five-minute slot: phones.** `serve --lan` lets the room follow the label on their phones (a QR code from the **On your phone** button) and vote in the blind test. It costs about 30 seconds and depends on the venue wifi, so keep it for the stand afterwards. Without `--lan` the button and the tally don't appear, and nothing else changes.
 
-**Before you go on:** run `python trust\trust.py serve`, open http://127.0.0.1:8765 on the projector, and open `trust\skills\qpcr-ddct\skill.json` in an editor in a second window, scrolled to `"failed_well_ct": 35`. In the blind test, click "Reset the test" if it was used in rehearsal. The track record keeps every rehearsal check, which is honest. To start it clean, stop the server, delete `trust\skills\qpcr-ddct\history.jsonl`, and start it again.
+**Before you go on:** run `python trust.py serve`, open http://127.0.0.1:8765 on the projector, and open `skills\qpcr-ddct\skill.json` in an editor in a second window, scrolled to `"failed_well_ct": 35`. In the blind test, click "Reset the test" if it was used in rehearsal. The track record keeps every rehearsal check, which is honest. To start it clean, stop the server, delete `skills\qpcr-ddct\history.jsonl`, and start it again.
 
 | Time | On screen | Say |
 |---|---|---|

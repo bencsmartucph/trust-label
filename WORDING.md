@@ -1,6 +1,6 @@
 # Frozen wording for the showcase
 
-Exact strings from the running checker (`python trust\trust.py serve`), 21 Oct 18:48. These won't change before the demo. Anything added after this is listed under "New, optional".
+Exact strings from the running checker (`python trust.py serve`), 21 Oct 18:48. These won't change before the demo. Anything added after this is listed under "New, optional".
 
 ## Shelf card (three things)
 

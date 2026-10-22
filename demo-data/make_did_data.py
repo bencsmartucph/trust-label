@@ -7,7 +7,7 @@ difference, display %9.3f). Swap each expected.csv for a real log from the do-fi
 
 The known-answer panel needs no do-file at all: it is built so the answer is exactly 2.000.
 
-    python trust/demo-data/make_did_data.py
+    python demo-data/make_did_data.py
 """
 import csv
 import json

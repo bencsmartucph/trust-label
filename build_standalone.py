@@ -5,7 +5,7 @@ failed-well cut-off goes from 35 to 40), so it needs no server: open it in a bro
 publish it as an artifact, or add it to the Toolbox store. It plays itself, then
 waits at the blind test for a volunteer to pick.
 
-    python trust/build_standalone.py [extra-app-id ...]
+    python build_standalone.py [extra-app-id ...]
 """
 import copy
 import json

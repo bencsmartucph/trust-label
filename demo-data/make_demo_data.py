@@ -7,7 +7,7 @@ control average, 2^-ΔΔCt, ROUND to 2 decimals). Swap each expected.csv for a r
 
 The known-answer plate needs no formula at all: it is built so the answers are 4, 2 and ½.
 
-    python trust/demo-data/make_demo_data.py
+    python demo-data/make_demo_data.py
 """
 import csv
 import json

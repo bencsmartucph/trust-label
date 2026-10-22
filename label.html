@@ -231,7 +231,7 @@ table.sxs { width: 100%; border-collapse: collapse; font-size: 16px; }
 </head>
 <body>
 <header class="top">
-  <a class="mark" href="#/"><i>✓</i>Toolbox · Trust labels</a>
+  <a class="mark" href="#/"><i>✓</i>Trust labels</a>
   <nav>
     <a href="#/" data-nav="shelf">Shelf</a>
     <a href="#/blind" data-nav="blind">Blind test</a>
@@ -610,7 +610,7 @@ function offlineView() {
   return `<div class="offline"><div class="kicker">Not connected</div>
     <h1 class="page">The checker isn't running</h1>
     <p class="lede">The labels are checked by a small Python program on this computer. Start it from the project folder:</p>
-    <p><code>python trust\\trust.py serve</code></p></div>`;
+    <p><code>python trust.py serve</code></p></div>`;
 }
 
 /* ---------- actions ---------- */
